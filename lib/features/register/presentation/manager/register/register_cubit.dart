@@ -1,11 +1,9 @@
 import 'dart:io';
-
 import 'package:bloc/bloc.dart';
 import 'package:firebase_auth/firebase_auth.dart';
+import 'package:flutter/foundation.dart'; // Required for kIsWeb
 import 'package:flutter/material.dart';
 import 'package:image_picker/image_picker.dart';
-import 'package:meta/meta.dart';
-
 import '../../../data/models/UserModel.dart';
 import '../../../data/repositories/auth_repository.dart';
 
@@ -22,20 +20,37 @@ class RegisterCubit extends Cubit<RegisterState> {
   final TextEditingController passwordController = TextEditingController();
   final TextEditingController phoneController = TextEditingController();
   final GlobalKey<FormState> formKey = GlobalKey<FormState>();
-  String? selectedGender;
-  File? profileImage;
 
-  Future<void> pickProfileImage(ImageSource source) async {
+  String? selectedGender;
+  XFile? profileImage;
+  String? profileImageUrl; // 🔹 Store Firebase URL
+
+  /// **Pick & Upload Image Immediately**
+  Future<void> pickAndUploadProfileImage(ImageSource source) async {
     final ImagePicker picker = ImagePicker();
     final XFile? pickedFile = await picker.pickImage(source: source);
 
     if (pickedFile != null) {
-      profileImage = File(pickedFile.path);
-      emit(ProfileImageSelected(profileImage!));
+      emit(RegisterLoading());
+
+      try {
+        // Upload image to Firebase and get the download URL
+        String? uploadedUrl = await authRepository.uploadProfileImage(pickedFile);
+
+        if (uploadedUrl != null) {
+          profileImageUrl = uploadedUrl; // ✅ Store the valid Firebase URL
+          emit(ProfileImageSelected(File(pickedFile.path))); // Update UI
+        } else {
+          emit(RegisterError("Image upload failed."));
+        }
+      } catch (e) {
+        emit(RegisterError("🔥 Image upload error: $e"));
+      }
+    } else {
+      emit(RegisterError("No image selected."));
     }
   }
-
-  /// Signup Function
+  /// **Signup Function**
   Future<void> signUp() async {
     if (!formKey.currentState!.validate()) {
       emit(RegisterError("Please fill all required fields correctly."));
@@ -45,24 +60,18 @@ class RegisterCubit extends Cubit<RegisterState> {
     emit(RegisterLoading());
 
     try {
-      final user = await authRepository.signUp(
-          emailController.text, passwordController.text);
-      String? imageUrl;
+      final user = await authRepository.signUp(emailController.text, passwordController.text);
+      String? imageUrl = profileImageUrl ?? "https://firebasestorage.googleapis.com/v0/b/default-profile-image.png"; // Default image
 
       if (user != null) {
-        if (profileImage != null) {
-          imageUrl =
-              await authRepository.uploadProfileImage(profileImage!, user.uid);
-        }
-
         final newUser = UserModel(
           uid: user.uid,
           username: usernameController.text.trim(),
           email: emailController.text.trim(),
-          profileUrl: imageUrl ?? "",
-          bio:"",
+          profileUrl: imageUrl, // 🔹 Save Firebase URL
+          bio: "",
           phone: phoneController.text.trim(),
-          gender:  selectedGender??"Male",
+          gender: selectedGender ?? "Male",
           followers: [],
           following: [],
           totalFollowers: 0,
@@ -71,9 +80,10 @@ class RegisterCubit extends Cubit<RegisterState> {
           isOnline: true,
           token: "",
         );
+
         await authRepository.saveUserToFirestore(newUser);
 
-        emit(RegisterSuccess(user, imageUrl ?? ""));
+        emit(RegisterSuccess(user, imageUrl));
       } else {
         emit(RegisterError("Failed to register user"));
       }

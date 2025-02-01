@@ -2,6 +2,7 @@ import 'dart:io';
 
 import 'package:cloud_firestore/cloud_firestore.dart';
 import 'package:firebase_auth/firebase_auth.dart';
+import 'package:image_picker/image_picker.dart';
 import '../../../../core/firebase/firebase_auth_service.dart';
 import '../../../../core/firebase/firebase_storage.dart';
 import '../models/UserModel.dart';
@@ -30,10 +31,9 @@ class AuthRepositoryImpl implements AuthRepository {
   }
 
   @override
-  Future<String?> uploadProfileImage(File imageFile , String uid) async {
-    return await _storageService.uploadProfileImage(imageFile,uid , "profile_images");
+  Future<String?> uploadProfileImage(XFile imageFile) async {
+    return await _storageService.uploadProfileImage(imageFile, _authService.currentUser!.uid, "profile_images");
   }
-
 
   @override
   Future<void> saveUserToFirestore(UserModel user) async {

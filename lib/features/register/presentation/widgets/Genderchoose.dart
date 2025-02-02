@@ -4,7 +4,7 @@ import 'package:flutter_bloc/flutter_bloc.dart';
 import '../manager/register/register_cubit.dart';
 
 class GenderDropdown extends StatelessWidget {
-  const GenderDropdown({Key? key}) : super(key: key);
+  const GenderDropdown({super.key});
 
   @override
   Widget build(BuildContext context) {
@@ -21,10 +21,8 @@ class GenderDropdown extends StatelessWidget {
             DropdownMenuItem(value: "Other", child: Text("Other")),
           ],
           onChanged: (value) {
-            cubit.setGender(value);
+           cubit.setGender(value);
           },
-          validator: (value) =>
-          value == null ? "Please select your gender" : null,
         );
       },
     );

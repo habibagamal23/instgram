@@ -1,5 +1,4 @@
 import 'package:cloud_firestore/cloud_firestore.dart';
-import 'package:firebase_core/firebase_core.dart';
 import 'package:firebase_storage/firebase_storage.dart';
 import 'package:get_it/get_it.dart';
 import 'package:firebase_auth/firebase_auth.dart';
@@ -12,21 +11,18 @@ import '../firebase/firebase_storage.dart';
 
 final GetIt getIt = GetIt.instance;
 
-/// Ensure Firebase is initialized before setting dependencies
 Future<void> setupGetIt() async {
-  await Firebase.initializeApp();
-
   // Register Firebase Instances
   getIt.registerLazySingleton<FirebaseAuth>(() => FirebaseAuth.instance);
   getIt.registerLazySingleton<FirebaseStorage>(() => FirebaseStorage.instance);
-  getIt.registerLazySingleton<FirebaseFirestore>(
-      () => FirebaseFirestore.instance);
+  getIt.registerLazySingleton<FirebaseFirestore>(() => FirebaseFirestore.instance);
+
   // Register Services
   getIt.registerLazySingleton<FirebaseAuthService>(
-      () => FirebaseAuthService(getIt<FirebaseAuth>()));
+          () => FirebaseAuthService(getIt<FirebaseAuth>()));
 
   getIt.registerLazySingleton<FirebaseStorageService>(
-      () => FirebaseStorageService(getIt<FirebaseStorage>()));
+          () => FirebaseStorageService(getIt<FirebaseStorage>()));
 
   // Register Repositories
   getIt.registerLazySingleton<AuthRepository>(() => AuthRepositoryImpl(
@@ -34,7 +30,7 @@ Future<void> setupGetIt() async {
       getIt<FirebaseStorageService>(),
       getIt<FirebaseFirestore>()));
 
-  // Register Cubits
-  getIt.registerFactory<RegisterCubit>(
-      () => RegisterCubit(authRepository: getIt<AuthRepository>()));
+  // Register Cubits (Singleton to avoid multiple instances)
+  getIt.registerLazySingleton<RegisterCubit>(
+          () => RegisterCubit(authRepository: getIt<AuthRepository>()));
 }

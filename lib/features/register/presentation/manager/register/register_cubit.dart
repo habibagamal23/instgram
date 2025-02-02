@@ -16,7 +16,6 @@ class RegisterCubit extends Cubit<RegisterState> {
 
   RegisterCubit({required this.authRepository}) : super(RegisterInitial());
 
-  /// Text Controllers for Form Fields
   final TextEditingController usernameController = TextEditingController();
   final TextEditingController emailController = TextEditingController();
   final TextEditingController passwordController = TextEditingController();
@@ -25,17 +24,6 @@ class RegisterCubit extends Cubit<RegisterState> {
   String? selectedGender;
   File? profileImage;
 
-  Future<void> pickProfileImage(ImageSource source) async {
-    final ImagePicker picker = ImagePicker();
-    final XFile? pickedFile = await picker.pickImage(source: source);
-
-    if (pickedFile != null) {
-      profileImage = File(pickedFile.path);
-      emit(ProfileImageSelected(profileImage!));
-    }
-  }
-
-  /// Signup Function
   Future<void> signUp() async {
     if (!formKey.currentState!.validate()) {
       emit(RegisterError("Please fill all required fields correctly."));
@@ -47,42 +35,60 @@ class RegisterCubit extends Cubit<RegisterState> {
     try {
       final user = await authRepository.signUp(
           emailController.text, passwordController.text);
+
+      if (user == null) {
+        emit(RegisterError("Failed to register user."));
+        return;
+      }
+
       String? imageUrl;
 
-      if (user != null) {
-        if (profileImage != null) {
-          imageUrl =
-              await authRepository.uploadProfileImage(profileImage!, user.uid);
-        }
-
-        final newUser = UserModel(
-          uid: user.uid,
-          username: usernameController.text.trim(),
-          email: emailController.text.trim(),
-          profileUrl: imageUrl ?? "",
-          bio:"",
-          phone: phoneController.text.trim(),
-          gender:  selectedGender??"Male",
-          followers: [],
-          following: [],
-          totalFollowers: 0,
-          totalFollowing: 0,
-          totalPosts: 0,
-          isOnline: true,
-          token: "",
-        );
-        await authRepository.saveUserToFirestore(newUser);
-
-        emit(RegisterSuccess(user, imageUrl ?? ""));
-      } else {
-        emit(RegisterError("Failed to register user"));
+      if (profileImage != null) {
+        imageUrl = await authRepository.uploadProfileImage(profileImage!, user.uid);
       }
+
+      final newUser = UserModel(
+        uid: user.uid,
+        username: usernameController.text.trim(),
+        email: emailController.text.trim(),
+        profileUrl: imageUrl ?? "",
+        bio: "",
+        phone: phoneController.text.trim(),
+        gender: selectedGender,
+        followers: [],
+        following: [],
+        totalFollowers: 0,
+        totalFollowing: 0,
+        totalPosts: 0,
+        isOnline: true,
+        token: "",
+      );
+
+      await authRepository.saveUserToFirestore(newUser);
+
+
+      emit(RegisterSuccess(user, imageUrl ?? ""));
     } catch (e) {
-      emit(RegisterError(e.toString()));
+      emit(RegisterError("An error occurred: ${e.toString()}"));
     }
   }
 
   void setGender(String? gender) {
-    selectedGender = gender;
+    selectedGender = gender ?? "Male";
+    emit(GenderSelected(selectedGender!));
+  }
+
+  void setImage(File image) {
+    profileImage = image;
+    emit(ProfileImageSelected(image));
+  }
+
+  @override
+  Future<void> close() {
+    usernameController.dispose();
+    emailController.dispose();
+    passwordController.dispose();
+    phoneController.dispose();
+    return super.close();
   }
 }

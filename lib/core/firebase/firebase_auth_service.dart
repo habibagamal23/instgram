@@ -7,13 +7,18 @@ class FirebaseAuthService {
 
   User? get currentUser => _auth.currentUser;
 
+  Stream<User?> authStateChanges() => _auth.authStateChanges();
+
   Future<User?> signUpWithEmailAndPassword(String email, String password) async {
     try {
       UserCredential userCredential =
       await _auth.createUserWithEmailAndPassword(email: email, password: password);
       return userCredential.user;
     } on FirebaseAuthException catch (e) {
-      throw Exception("Sign Up Error: ${e.message}");
+      throw FirebaseAuthException(
+        code: e.code,
+        message: "Sign Up Error: ${e.message}",
+      );
     }
   }
 
@@ -23,11 +28,18 @@ class FirebaseAuthService {
       await _auth.signInWithEmailAndPassword(email: email, password: password);
       return userCredential.user;
     } on FirebaseAuthException catch (e) {
-      throw Exception("Sign In Error: ${e.message}");
+      throw FirebaseAuthException(
+        code: e.code,
+        message: "Sign In Error: ${e.message}",
+      );
     }
   }
 
   Future<void> signOut() async {
-    await _auth.signOut();
+    try {
+      await _auth.signOut();
+    } catch (e) {
+      throw Exception("Sign Out Error: ${e.toString()}");
+    }
   }
 }

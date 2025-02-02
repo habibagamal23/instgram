@@ -22,3 +22,8 @@ class ProfileImageSelected extends RegisterState {
   final File imageFile;
   ProfileImageSelected(this.imageFile);
 }
+
+class GenderSelected extends RegisterState {
+  final String gender;
+  GenderSelected(this.gender);
+}

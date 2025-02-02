@@ -12,35 +12,36 @@ class AuthRepositoryImpl implements AuthRepository {
   final FirebaseStorageService _storageService;
   final FirebaseFirestore _firestore;
 
-  AuthRepositoryImpl(this._authService , this._storageService , this._firestore);
+  AuthRepositoryImpl(this._authService, this._storageService, this._firestore);
 
   @override
   Future<User?> signUp(String email, String password) async {
-    return await _authService.signUpWithEmailAndPassword(email, password);
+    try {
+      return await _authService.signUpWithEmailAndPassword(email, password);
+    } catch (e) {
+      throw Exception("Sign Up Error: ${e.toString()}");
+    }
   }
 
   @override
-  Future<User?> signIn(String email, String password) async {
-    return await _authService.signInWithEmailAndPassword(email, password);
+  Future<String?> uploadProfileImage(File imageFile, String uid) async {
+    try {
+      return await _storageService.uploadFile(
+          file: imageFile, userId: uid, child: "profileImages");
+    } catch (e) {
+      throw Exception("Error uploadImage ${e.toString()}");
+    }
   }
-
-  @override
-  Future<void> signOut() async {
-    await _authService.signOut();
-  }
-
-  @override
-  Future<String?> uploadProfileImage(File imageFile , String uid) async {
-    return await _storageService.uploadProfileImage(imageFile,uid , "profile_images");
-  }
-
 
   @override
   Future<void> saveUserToFirestore(UserModel user) async {
     try {
-      await _firestore.collection("users").doc(user.uid).set(user.toFirestore());
+      await _firestore
+          .collection("users")
+          .doc(user.uid)
+          .set(user.toFirestore());
     } catch (e) {
-      throw Exception("Error saving user to Firestore: $e");
+      throw Exception("Error saving user to Firestore: ${e.toString()}");
     }
   }
 }

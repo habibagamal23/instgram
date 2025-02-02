@@ -14,7 +14,7 @@ void main() async {
     options: DefaultFirebaseOptions.currentPlatform,
   );
 
-  setupGetIt();
+  await setupGetIt();
 
   runApp(MultiBlocProvider(providers: [
     BlocProvider(create: (context) => getIt<RegisterCubit>()),

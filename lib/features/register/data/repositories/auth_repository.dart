@@ -7,8 +7,6 @@ import '../models/UserModel.dart';
 
 abstract class AuthRepository {
   Future<User?> signUp(String email, String password);
-  Future<User?> signIn(String email, String password);
   Future<String?> uploadProfileImage(File imageFile , String uid);
   Future<void> saveUserToFirestore(UserModel user);
-  Future<void> signOut();
 }

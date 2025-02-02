@@ -12,9 +12,10 @@ class RegisterButton extends StatelessWidget {
       listener: (context, state) {
         if (state is RegisterSuccess) {
           ScaffoldMessenger.of(context).showSnackBar(
-            SnackBar(content: Text("Registration Successful! Welcome ${state.user.email}")),
+            SnackBar(
+                content: Text(
+                    "Registration Successful! Welcome ${state.user.email}")),
           );
-          // Navigate to home screen
         } else if (state is RegisterError) {
           ScaffoldMessenger.of(context).showSnackBar(
             SnackBar(content: Text(state.message)),
@@ -23,15 +24,14 @@ class RegisterButton extends StatelessWidget {
       },
       builder: (context, state) {
         final cubit = context.read<RegisterCubit>();
-
-        if( state is RegisterLoading){
-         Center(child: const CircularProgressIndicator());
+        if (state is RegisterLoading) {
+          return Center(child: const CircularProgressIndicator());
+        } else {
+          return InstagramButton(
+            onPressed: cubit.signUp,
+            text: 'Register',
+          );
         }
-
-        return InstagramButton(
-          onPressed: cubit.signUp,
-          text: 'Register',
-        );
       },
     );
   }

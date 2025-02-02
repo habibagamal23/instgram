@@ -2,19 +2,35 @@ import 'dart:io';
 import 'package:firebase_storage/firebase_storage.dart';
 
 class FirebaseStorageService {
+
   final FirebaseStorage _storage;
 
   FirebaseStorageService(this._storage);
 
-  Future<String?> uploadProfileImage(
-      File imageFile, String userId, String child) async {
+  Future<String?> uploadFile({
+    required File file,
+    required String userId,
+    required String child,
+  }) async {
     try {
-      final extaionIamge = imageFile.path.split(".").last;
-      final path = '$child/$userId.$extaionIamge';
+      String extensionImage = file.path.contains('.')
+          ? file.path.split('.').last
+          : 'jpg';
+
+
+      final String path = '$child/$userId.$extensionImage';
+
       final ref = _storage.ref().child(path);
-      UploadTask uploadTask = ref.putFile(imageFile);
-      TaskSnapshot snapshot = await uploadTask;
-      return await snapshot.ref.getDownloadURL();
+
+      UploadTask uploadTask = ref.putFile(file);
+
+      var snapshot = await uploadTask;
+
+      if (snapshot.state == TaskState.success) {
+        return await ref.getDownloadURL();
+      } else {
+        throw Exception("Upload failed, please try again.");
+      }
     } catch (e) {
       throw Exception("Image Upload Error: $e");
     }

@@ -10,16 +10,15 @@ class FirebaseStorageService {
   Future<String?> uploadFile({
     required File file,
     required String userId,
-    required String pathchild,
+    required String child,
   }) async {
     try {
-
       String extensionImage = file.path.contains('.')
           ? file.path.split('.').last
           : 'jpg';
 
 
-      final String path = '$pathchild/$userId.$extensionImage';
+      final String path = '$child/$userId.$extensionImage';
 
       final ref = _storage.ref().child(path);
 

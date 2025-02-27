@@ -14,13 +14,14 @@ class ChooseImageWidget extends StatelessWidget {
     final cubit = context.read<RegisterCubit>();
     final ImagePicker picker = ImagePicker();
 
-    return GestureDetector(
-      onTap: () async {
-        await showModalBottomSheet(
-          context: context,
-          builder: (context) {
-            return SafeArea(
-              child: Wrap(
+    return Center(
+      child: GestureDetector(
+        onTap: () async {
+          await showModalBottomSheet(
+            context: context,
+            builder: (context) {
+              return Column(
+                mainAxisSize: MainAxisSize.min,
                 children: [
                   // Take a Photo
                   ListTile(
@@ -59,26 +60,25 @@ class ChooseImageWidget extends StatelessWidget {
                     },
                   ),
                 ],
-              ),
-            );
-          },
-        );
-      },
-      child: BlocBuilder<RegisterCubit, RegisterState>(
-        builder: (context, state) {
-
-          return CircleAvatar(
-            radius: 50.r,
-            backgroundImage: cubit.profileImage != null ? FileImage(cubit.profileImage! ) : null,
-            child: cubit.profileImage  == null
-                ? Icon(
-              Icons.camera_alt,
-              size: 40.sp,
-              color: Colors.grey,
-            )
-                : null,
+              );
+            },
           );
         },
+        child: BlocBuilder<RegisterCubit, RegisterState>(
+          builder: (context, state) {
+            return CircleAvatar(
+              radius: 50.r,
+              backgroundImage: cubit.profileImage != null ? FileImage(cubit.profileImage!) : null,
+              child: cubit.profileImage  == null
+                  ? Icon(
+                Icons.camera_alt,
+                size: 40.sp,
+                color: Colors.grey,
+              )
+                  : null,
+            );
+          },
+        ),
       ),
     );
   }

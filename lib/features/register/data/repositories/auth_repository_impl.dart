@@ -19,7 +19,7 @@ class AuthRepositoryImpl implements AuthRepository {
     try {
       return await _authService.signUpWithEmailAndPassword(email, password);
     } catch (e) {
-      throw Exception("Sign Up Error: ${e.toString()}");
+      throw Exception("Sign aUp Error: ${e.toString()}");
     }
   }
 
@@ -27,7 +27,7 @@ class AuthRepositoryImpl implements AuthRepository {
   Future<String?> uploadProfileImage(File imageFile, String uid) async {
     try {
       return await _storageService.uploadFile(
-          file: imageFile, userId: uid, child: "profileImages");
+          file: imageFile, userId: uid, pathchild: "profileImages");
     } catch (e) {
       throw Exception("Error uploadImage ${e.toString()}");
     }

@@ -1,5 +1,7 @@
 import 'package:flutter/material.dart';
 import 'package:flutter_bloc/flutter_bloc.dart';
+import 'package:go_router/go_router.dart';
+import '../../../../core/routes/constants_routes.dart';
 import '../../../../core/widget/InstagramButton.dart';
 import '../manager/register/register_cubit.dart';
 
@@ -16,6 +18,7 @@ class RegisterButton extends StatelessWidget {
                 content: Text(
                     "Registration Successful! Welcome ${state.user.email}")),
           );
+          context.go(ConstantsRoutes.homeScreen);
         } else if (state is RegisterError) {
           ScaffoldMessenger.of(context).showSnackBar(
             SnackBar(content: Text(state.message)),

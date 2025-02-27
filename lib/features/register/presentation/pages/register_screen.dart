@@ -23,7 +23,7 @@ class RegisterScreen extends StatelessWidget {
             child: Column(
               crossAxisAlignment: CrossAxisAlignment.start,
               children: [
-                const Center(child: ChooseImageWidget()),
+                ChooseImageWidget(),
                  SizedBox(height: 20.h),
                 const RegisterForm(),
                  SizedBox(height: 10.h),

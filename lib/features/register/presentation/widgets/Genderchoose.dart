@@ -18,7 +18,6 @@ class GenderDropdown extends StatelessWidget {
           items: const [
             DropdownMenuItem(value: "Male", child: Text("Male")),
             DropdownMenuItem(value: "Female", child: Text("Female")),
-            DropdownMenuItem(value: "Other", child: Text("Other")),
           ],
           onChanged: (value) {
            cubit.setGender(value);

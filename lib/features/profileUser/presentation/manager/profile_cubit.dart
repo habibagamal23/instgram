@@ -1,5 +1,6 @@
 import 'package:bloc/bloc.dart';
 import 'package:firebase_auth/firebase_auth.dart';
+import 'package:flutter/material.dart';
 import 'package:meta/meta.dart';
 
 import '../../../../core/firebase/firebase_auth_service.dart';
@@ -13,18 +14,60 @@ class ProfileCubit extends Cubit<ProfileState> {
 
   ProfileCubit({required this.profileRepository}) : super(ProfileInitial());
 
+  final TextEditingController bioController = TextEditingController();
+  final TextEditingController websiteController = TextEditingController();
+  UserModel? currentUser;
+
+
+
   Future<void> fetchUserProfile() async {
     emit(ProfileLoading());
     try {
       String? uid = FirebaseAuth.instance.currentUser?.uid;
       if (uid != null) {
         final user = await profileRepository.getUserProfile(uid);
+        currentUser = user;
+        websiteController.text = user.website ?? "";
+        bioController.text = user.bio ?? "";
         emit(ProfileLoaded(user));
+
       } else {
         emit(ProfileError("User is not logged in"));
       }
     } catch (e) {
       emit(ProfileError("Error loading profile: $e"));
+    }
+  }
+
+  Future<void> updateUserProfile() async {
+    if (currentUser == null) return;
+
+    emit(ProfileLoading());
+    try {
+      UserModel updatedUser = UserModel(
+        uid: currentUser!.uid,
+        username: currentUser!.username,
+        bio: bioController.text,
+        phone: currentUser!.phone,
+        website: websiteController.text.trim(),
+        email: currentUser!.email,
+        profileUrl: currentUser!.profileUrl,
+        followers: currentUser!.followers,
+        following: currentUser!.following,
+        totalFollowers: currentUser!.totalFollowers,
+        totalFollowing: currentUser!.totalFollowing,
+        totalPosts: currentUser!.totalPosts,
+        isOnline: currentUser!.isOnline,
+        token: currentUser!.token,
+      );
+
+      await profileRepository.updateUserProfile(updatedUser);
+      currentUser = updatedUser;
+
+      emit(ProfileLoaded(updatedUser));
+      emit(ProfileUpdated());
+    } catch (e) {
+      emit(ProfileError("Error updating profile: $e"));
     }
   }
 }

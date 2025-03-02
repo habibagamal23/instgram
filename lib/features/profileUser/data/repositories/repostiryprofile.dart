@@ -19,4 +19,15 @@ class ProfileRepository {
       throw Exception("Error fetching user data: $e");
     }
   }
+
+  Future<void> updateUserProfile(UserModel user) async {
+    try {
+      await firestore
+          .collection("users")
+          .doc(user.uid)
+          .update(user.toFirestore());
+    } catch (e) {
+      throw Exception("Error updating profile: $e");
+    }
+  }
 }

@@ -6,7 +6,7 @@ import 'constants_routes.dart';
 
 class AppRouter {
   static final GoRouter router = GoRouter(
-    initialLocation: ConstantsRoutes.homeScreen,
+    initialLocation: ConstantsRoutes.registerScreen,
     debugLogDiagnostics: true,
     routes: [
       GoRoute(

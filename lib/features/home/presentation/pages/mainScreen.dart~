@@ -2,7 +2,6 @@ import 'package:flutter/material.dart';
 
 import 'package:firebase_auth/firebase_auth.dart';
 
-import '../../../post/presentation/pages/addpostscreen.dart';
 import '../../../profileUser/presentation/pages/profileScreeen.dart';
 import 'homepage.dart';
 
@@ -49,7 +48,7 @@ class _MainScreenState extends State<MainScreen> {
         children: [
           Homepage(),
           Homepage(),
-          AddPostScreen(),
+          Homepage(),
           ProfileScreen(),
         ],
       ),

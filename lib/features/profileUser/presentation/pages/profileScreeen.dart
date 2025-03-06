@@ -5,6 +5,7 @@ import 'package:flutter_bloc/flutter_bloc.dart';
 import '../../../register/data/models/UserModel.dart';
 import '../../data/repositories/repostiryprofile.dart';
 import '../manager/profile_cubit.dart';
+import '../widgets/profileview.dart';
 import 'edit.dart';
 
 class ProfileScreen extends StatelessWidget {
@@ -33,43 +34,5 @@ class ProfileScreen extends StatelessWidget {
   }
 }
 
-class ProfileView extends StatelessWidget {
-  final UserModel user;
-
-  ProfileView({required this.user});
-
-  @override
-  Widget build(BuildContext context) {
-    return Padding(
-      padding: const EdgeInsets.all(16.0),
-      child: Column(
-        crossAxisAlignment: CrossAxisAlignment.center,
-        children: [
-          // Username
-          Text(user.username ?? "No username",
-              style: TextStyle(fontSize: 22, fontWeight: FontWeight.bold)),
-
-          Text(user.bio ?? "No bio",
-              style: TextStyle(fontSize: 16, color: Colors.grey)),
-
-
-          SizedBox(height: 20),
-          ElevatedButton(
-            onPressed: () {
-              Navigator.push(
-                context,
-                MaterialPageRoute(
-                  builder: (context) => EditProfileScreen(),
-                ),
-              );
-            },
-            child: Text("Edit Profile"),
-          ),
-
-        ],
-      ),
-    );
-  }
-}
 
 

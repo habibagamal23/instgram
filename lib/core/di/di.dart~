@@ -52,6 +52,6 @@ Future<void> setupGetIt() async {
 
   // Post Cubit
   getIt.registerLazySingleton<PostCubit>(
-          () => PostCubit(getIt<PostRepositoryImplementation>()));
+          () => PostCubit(getIt<PostRepositoryImplementation>(), getIt<ProfileCubit>()));
 }
 

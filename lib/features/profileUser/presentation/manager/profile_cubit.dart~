@@ -20,6 +20,7 @@ class ProfileCubit extends Cubit<ProfileState> {
 
 
 
+  // Fetch user profile from Firestore only if it's not already loaded
   Future<void> fetchUserProfile() async {
     // Check if user is already loaded in memory
     if (currentUser != null) {
@@ -31,6 +32,7 @@ class ProfileCubit extends Cubit<ProfileState> {
     try {
       String? uid = FirebaseAuth.instance.currentUser?.uid;
       if (uid != null) {
+        // Fetch user from Firestore if not cached
         final user = await profileRepository.getUserProfile(uid);
         currentUser = user; // Cache the user data in memory
         websiteController.text = user.website ?? "";

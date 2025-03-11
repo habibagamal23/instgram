@@ -1,9 +1,11 @@
+import 'package:cloud_firestore/cloud_firestore.dart';
+
 class PostModel {
   final String? postID;
   final String? username;
   final String? description;
   final String? imageURL;
-  final String? createdAt;
+  final Timestamp? createdAt;
   final String? profileUrl;
   final List<String>? likes;
   final List<String>? comments;
@@ -35,7 +37,7 @@ class PostModel {
       username: json['username'] as String?,
       description: json['Description'] as String?,
       profileUrl: json['profileUrl'] as String?,
-      createdAt: json['createdAT'] as String?,
+      createdAt: json['createdAT'] as Timestamp?,
       imageURL: json['ImageURL'] as String?,
       likes:
       (json['Likes'] as List<dynamic>?)?.map((e) => e as String).toList(),

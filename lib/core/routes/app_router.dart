@@ -1,6 +1,7 @@
 import 'package:flutter/material.dart';
 import 'package:go_router/go_router.dart';
 import '../../features/home/presentation/pages/mainScreen.dart';
+import '../../features/register/presentation/pages/loginscreen.dart';
 import '../../features/register/presentation/pages/register_screen.dart';
 import 'constants_routes.dart';
 
@@ -11,7 +12,7 @@ class AppRouter {
     routes: [
       GoRoute(
         path: ConstantsRoutes.registerScreen,
-        builder: (context, state) => const RegisterScreen(),
+        builder: (context, state) =>  LoginScreen(),
       ),
       GoRoute(
         path: ConstantsRoutes.homeScreen,

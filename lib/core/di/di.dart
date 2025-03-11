@@ -2,6 +2,8 @@ import 'package:cloud_firestore/cloud_firestore.dart';
 import 'package:firebase_storage/firebase_storage.dart';
 import 'package:get_it/get_it.dart';
 import 'package:firebase_auth/firebase_auth.dart';
+import 'package:instaflutter/features/home/presentation/manager/home_post_cubit.dart';
+import 'package:instaflutter/features/register/presentation/manager/login_cubit.dart';
 
 import '../../features/post/data/repositories/postrepo.dart';
 import '../../features/post/presentation/manager/post_cubit.dart';
@@ -53,5 +55,9 @@ Future<void> setupGetIt() async {
   // Post Cubit
   getIt.registerLazySingleton<PostCubit>(
           () => PostCubit(getIt<PostRepositoryImplementation>()));
+
+//home cubit
+  getIt.registerLazySingleton<HomePostCubit>(
+          () => HomePostCubit(getIt<PostRepositoryImplementation>()));
 }
 

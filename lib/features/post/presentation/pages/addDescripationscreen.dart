@@ -1,6 +1,8 @@
 import 'package:flutter/material.dart';
 import 'package:flutter_bloc/flutter_bloc.dart';
+import 'package:go_router/go_router.dart';
 
+import '../../../../core/routes/constants_routes.dart';
 import '../../../profileUser/presentation/manager/profile_cubit.dart';
 import '../manager/post_cubit.dart';
 
@@ -22,7 +24,8 @@ class AddDescriptionScreen extends StatelessWidget {
                 backgroundColor: Colors.green,
               ),
             );
-            Navigator.pop(context);
+            BlocProvider.of<ProfileCubit>(context).fetchUserProfile();
+
           } else if (state is CreatePostFailure) {
             ScaffoldMessenger.of(context).showSnackBar(
               SnackBar(
@@ -33,6 +36,9 @@ class AddDescriptionScreen extends StatelessWidget {
           }
         },
         builder: (context, state) {
+          if(state is CreatePostLoading){
+            return Center(child: CircularProgressIndicator());
+          }
           return Padding(
             padding: const EdgeInsets.all(16.0),
             child: Form(
@@ -62,10 +68,11 @@ class AddDescriptionScreen extends StatelessWidget {
                   SizedBox(height: 20),
                   ElevatedButton(
                     onPressed: () {
-                      final currentUser = context.read<ProfileCubit>().currentUser;
+                      final currentUser =
+                          context.read<ProfileCubit>().currentUser;
                       if (currentUser != null) {
-                        //  post creation
-                        postCubit.createPost(currentUser);
+                        postCubit.createPost(currentUser);i
+                        context.go(ConstantsRoutes.homeScreen);
                       } else {
                         ScaffoldMessenger.of(context).showSnackBar(
                           SnackBar(

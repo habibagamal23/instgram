@@ -1,68 +1,57 @@
 import 'dart:io';
 
 import 'package:cloud_firestore/cloud_firestore.dart';
+import 'package:flutter/material.dart';
 
 import '../../../../core/firebase/firebase_storage.dart';
 import '../models/postmodel.dart';
-
 
 class PostRepositoryImplementation {
   final FirebaseFirestore firestore;
   final FirebaseStorageService storageService;
 
   PostRepositoryImplementation(this.storageService, this.firestore);
-
-  @override
   Future<void> createPost(PostModel post) async {
     try {
-      await firestore
-          .collection('posts')
-          .doc(post.postID)
-          .set(post.toFirestore());
+      await firestore.collection('posts').doc(post.postID).set(post.toFirestore());
 
-      DocumentReference documentReference =
-      await firestore.collection("users").doc(post.userID);
-      await documentReference.update({
+      DocumentReference userRef = firestore.collection("users").doc(post.userID);
+      await userRef.update({
         "totalPosts": FieldValue.increment(1),
       });
     } catch (e) {
-      throw Exception("Error to create Post ${e.toString()}");
+      throw Exception("Error creating post: ${e.toString()}");
     }
   }
 
-
-  Stream<List<PostModel>> getallRandomlyPosts(String Uid) {
-    try {
-      return firestore.collection("Posts").snapshots().map((snapshot) =>
-          snapshot.docs
-              .map((post) => PostModel.fromFirestore(post.data()))
-              .where((post) => post.userID != Uid)
-              .toList());
-    } catch (e) {
-      throw Exception("Error to get Post ${e.toString()}");
-    }
-  }
-
-//create new post folder in firebase
-
-  Future<String?> uploadUrlImage(File imageFile, String Uid) async {
-    try {
-      return await storageService.uploadFile(
-          file: imageFile, userId: Uid, pathchild: "Posts");
-    } catch (e) {
-      throw Exception("Failed to upload ${e.toString()}");
-    }
-  }
-
-//Home Posts
-
+  // Stream for home posts
   Stream<List<PostModel>> getAllHomePosts() {
     return firestore
-        .collection("Posts")
-        .orderBy('createdAT', descending: true)
+        .collection("posts")
         .snapshots()
         .map((snapshot) => snapshot.docs
-        .map((post) => PostModel.fromFirestore(post.data()))
+        .map((post) => PostModel.fromFirestore(post.data() as Map<String, dynamic>))
         .toList());
+  }
+
+  // Stream for posts of a specific user (profile posts)
+  Stream<List<PostModel>> getUserPosts(String userId) {
+    debugPrint("getUserPosts $userId");
+    return firestore
+        .collection('posts')
+        .snapshots()
+        .map((snapshot) => snapshot.docs
+        .map((doc) => PostModel.fromFirestore(doc.data() as Map<String, dynamic>))
+        .where((post) => post.userID == userId)
+        .toList());
+  }
+
+  Future<String?> uploadUrlImage(File imageFile, String uid) async {
+    try {
+      return await storageService.uploadFile(
+          file: imageFile, userId: uid, pathchild: "posts");
+    } catch (e) {
+      throw Exception("Failed to upload: ${e.toString()}");
+    }
   }
 }

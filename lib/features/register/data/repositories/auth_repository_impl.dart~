@@ -44,14 +44,4 @@ class AuthRepositoryImpl implements AuthRepository {
       throw Exception("Error saving user to Firestore: ${e.toString()}");
     }
   }
-
-
-  
-  Future<User?> login(String email, String password) async {
-    try {
-      return await _authService.signInWithEmailAndPassword(email, password);
-    } catch (e) {
-      throw Exception("Login Error: ${e.toString()}");
-    }
-  }
 }

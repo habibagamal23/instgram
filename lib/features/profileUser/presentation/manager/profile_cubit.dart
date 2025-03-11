@@ -22,20 +22,27 @@ class ProfileCubit extends Cubit<ProfileState> {
 
   Future<void> fetchUserProfile() async {
     // Check if user is already loaded in memory
-    if (currentUser != null) {
-      emit(ProfileLoaded(currentUser!));
-      return; // Return early if user is already cached in memory
-    }
+    // if (currentUser != null) {
+    //   emit(ProfileLoaded(currentUser!));
+    //   return; // Return early if user is already cached in memory
+    // }
 
     emit(ProfileLoading());
     try {
       String? uid = FirebaseAuth.instance.currentUser?.uid;
       if (uid != null) {
         final user = await profileRepository.getUserProfile(uid);
-        currentUser = user; // Cache the user data in memory
-        websiteController.text = user.website ?? "";
-        bioController.text = user.bio ?? "";
-        emit(ProfileLoaded(user));
+        if (user != null) {
+          currentUser = user;
+          debugPrint("user ${currentUser!.email!}");
+          websiteController.text = user.website ?? "";
+          bioController.text = user.bio ?? "";
+          emit(ProfileLoaded(user));
+          debugPrint("user ${currentUser!.email}");
+        }  else {
+          emit(ProfileError("User is  get data error"));
+        }
+
       } else {
         emit(ProfileError("User is not logged in"));
       }
@@ -68,7 +75,9 @@ class ProfileCubit extends Cubit<ProfileState> {
       );
 
       await profileRepository.updateUserProfile(updatedUser);
-      currentUser = updatedUser; // Cache the updated user in memory
+      debugPrint("user $currentUser");
+      currentUser = updatedUser;
+      debugPrint("user updated ${updatedUser.email}");
       emit(ProfileLoaded(updatedUser));
       emit(ProfileUpdated());
     } catch (e) {

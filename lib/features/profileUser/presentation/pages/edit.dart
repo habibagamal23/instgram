@@ -19,7 +19,6 @@ class EditProfileScreen extends StatelessWidget {
                 controller: profileCubit.bioController,
                 decoration: InputDecoration(labelText: "Bio"),
               ),
-
               TextFormField(
                 controller: profileCubit.websiteController,
                 decoration: InputDecoration(labelText: "Website"),

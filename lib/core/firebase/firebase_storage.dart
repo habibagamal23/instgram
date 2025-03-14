@@ -1,5 +1,6 @@
 import 'dart:io';
 import 'package:firebase_storage/firebase_storage.dart';
+import 'package:uuid/uuid.dart';
 
 class FirebaseStorageService {
 
@@ -19,7 +20,7 @@ class FirebaseStorageService {
           : 'jpg';
 
 
-      final String path = '$pathchild/$userId.$extensionImage';
+      final String path = '$pathchild/${Uuid().v1()}.$extensionImage';
 
       final ref = _storage.ref().child(path);
 

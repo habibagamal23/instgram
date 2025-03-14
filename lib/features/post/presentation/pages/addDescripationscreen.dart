@@ -71,7 +71,7 @@ class AddDescriptionScreen extends StatelessWidget {
                       final currentUser =
                           context.read<ProfileCubit>().currentUser;
                       if (currentUser != null) {
-                        postCubit.createPost(currentUser);i
+                        postCubit.createPost(currentUser);
                         context.go(ConstantsRoutes.homeScreen);
                       } else {
                         ScaffoldMessenger.of(context).showSnackBar(

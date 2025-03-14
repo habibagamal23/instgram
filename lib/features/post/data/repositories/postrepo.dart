@@ -26,12 +26,8 @@ class PostRepositoryImplementation {
 
   // Stream for home posts
   Stream<List<PostModel>> getAllHomePosts() {
-    return firestore
-        .collection("posts")
-        .snapshots()
-        .map((snapshot) => snapshot.docs
-        .map((post) => PostModel.fromFirestore(post.data() as Map<String, dynamic>))
-        .toList());
+    final postCollection = firestore.collection("posts").orderBy("createdAT", descending: true);
+    return postCollection.snapshots().map((snapshot) => snapshot.docs.map((post) => PostModel.fromFirestore(post.data() as Map<String, dynamic>)).toList());
   }
 
   // Stream for posts of a specific user (profile posts)

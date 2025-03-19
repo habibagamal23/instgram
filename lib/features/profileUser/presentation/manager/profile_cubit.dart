@@ -17,8 +17,7 @@ class ProfileCubit extends Cubit<ProfileState> {
   final TextEditingController bioController = TextEditingController();
   final TextEditingController websiteController = TextEditingController();
   UserModel? currentUser;
-
-
+  final TextEditingController username = TextEditingController();
 
   Future<void> fetchUserProfile() async {
     // Check if user is already loaded in memory
@@ -37,12 +36,12 @@ class ProfileCubit extends Cubit<ProfileState> {
           debugPrint("user ${currentUser!.email!}");
           websiteController.text = user.website ?? "";
           bioController.text = user.bio ?? "";
+          username.text = user.username ?? "";
           emit(ProfileLoaded(user));
           debugPrint("user ${currentUser!.email}");
-        }  else {
+        } else {
           emit(ProfileError("User is  get data error"));
         }
-
       } else {
         emit(ProfileError("User is not logged in"));
       }
@@ -59,7 +58,7 @@ class ProfileCubit extends Cubit<ProfileState> {
     try {
       UserModel updatedUser = UserModel(
         uid: currentUser!.uid,
-        username: currentUser!.username,
+        username: username.text.trim(),
         bio: bioController.text,
         phone: currentUser!.phone,
         website: websiteController.text.trim(),
@@ -75,11 +74,22 @@ class ProfileCubit extends Cubit<ProfileState> {
       );
 
       await profileRepository.updateUserProfile(updatedUser);
+
       debugPrint("user $currentUser");
       currentUser = updatedUser;
       debugPrint("user updated ${updatedUser.email}");
+
+    // Update posts **only if username or profileUrl changed**
+      // update also post info  when this is updated
+      await profileRepository.updateUserPostsInfo(
+        currentUser!.uid!,
+        updatedUser!.profileUrl!,
+        updatedUser!.username!,
+      );
+      debugPrint("post proifle updated ${updatedUser.username}");
+
       emit(ProfileLoaded(updatedUser));
-      emit(ProfileUpdated());
+      emit(ProfileUpdated(updatedUser));
     } catch (e) {
       emit(ProfileError("Error updating profile: $e"));
     }

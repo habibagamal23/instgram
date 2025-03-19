@@ -4,15 +4,15 @@ class Assets {
 
   static const String coreFirebaseFirebaseStorage = 'lib/core/firebase/firebase_storage.dart~';
   static const String coreRoutesAppRouter = 'lib/core/routes/app_router.dart~';
-  static const String dataModelsPostmodel = 'lib/features/post/data/models/postmodel.dart~';
   static const String dataRepositoriesAuthRepositoryImpl = 'lib/features/register/data/repositories/auth_repository_impl.dart~';
-  static const String dataRepositoriesPostrepo = 'lib/features/post/data/repositories/postrepo.dart~';
+  static const String dataRepositoriesRepostiryprofile = 'lib/features/profileUser/data/repositories/repostiryprofile.dart~';
   static const String diDi = 'lib/core/di/di.dart';
   static const String firebaseFirebaseAuthService = 'lib/core/firebase/firebase_auth_service.dart';
   static const String firebaseFirebaseStorage = 'lib/core/firebase/firebase_storage.dart';
   static const String generatedAssets = 'lib/generated/assets.dart';
   static const String instaflutterLibMain = 'lib/main.dart~';
   static const String libFirebaseOptions = 'lib/firebase_options.dart';
+  static const String libGeneratedAssets = 'lib/generated/assets.dart~';
   static const String libMain = 'lib/main.dart';
   static const String managerHomePostCubit = 'lib/features/home/presentation/manager/home_post_cubit.dart';
   static const String managerHomePostState = 'lib/features/home/presentation/manager/home_post_state.dart';
@@ -32,10 +32,10 @@ class Assets {
   static const String pagesMainScreen = 'lib/features/home/presentation/pages/mainScreen.dart';
   static const String pagesProfileScreeen = 'lib/features/profileUser/presentation/pages/profileScreeen.dart';
   static const String pagesRegisterScreen = 'lib/features/register/presentation/pages/register_screen.dart';
-  static const String presentationManagerProfileCubit = 'lib/features/profileUser/presentation/manager/profile_cubit.dart~';
+  static const String presentationManagerHomePostCubit = 'lib/features/home/presentation/manager/home_post_cubit.dart~';
   static const String presentationPagesMainScreen = 'lib/features/home/presentation/pages/mainScreen.dart~';
-  static const String presentationPagesProfileScreeen = 'lib/features/profileUser/presentation/pages/profileScreeen.dart~';
   static const String presentationWidgetsChooseImage = 'lib/features/register/presentation/widgets/chooseImage.dart~';
+  static const String presentationWidgetsProfileview = 'lib/features/profileUser/presentation/widgets/profileview.dart~';
   static const String registerRegisterCubit = 'lib/features/register/presentation/manager/register/register_cubit.dart';
   static const String registerRegisterState = 'lib/features/register/presentation/manager/register/register_state.dart';
   static const String repositoriesAuthRepository = 'lib/features/register/data/repositories/auth_repository.dart';
@@ -48,6 +48,7 @@ class Assets {
   static const String widgetInstagramTextField = 'lib/core/widget/InstagramTextField.dart';
   static const String widgetsChooseImage = 'lib/features/register/presentation/widgets/chooseImage.dart';
   static const String widgetsGenderchoose = 'lib/features/register/presentation/widgets/Genderchoose.dart';
+  static const String widgetsPostWidget = 'lib/features/home/presentation/widgets/postWidget.dart';
   static const String widgetsProfileview = 'lib/features/profileUser/presentation/widgets/profileview.dart';
   static const String widgetsRegisterButton = 'lib/features/register/presentation/widgets/register_button.dart';
   static const String widgetsRegisterForm = 'lib/features/register/presentation/widgets/register_form.dart';

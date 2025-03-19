@@ -32,7 +32,7 @@ class ProfileRepository {
       throw Exception("Error updating profile: $e");
     }
   }
-
+  
   Future<void> updateUserPostsInfo(String userId, String newProfileUrl, String newUsername) async {
     try {
       QuerySnapshot querySnapshot = await firestore

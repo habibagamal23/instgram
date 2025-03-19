@@ -3,7 +3,9 @@ import 'package:flutter/material.dart';
 import 'package:flutter_bloc/flutter_bloc.dart';
 import '../../../../core/di/di.dart';
 import '../../../post/data/models/postmodel.dart';
+import '../../../post/presentation/manager/post_cubit.dart';
 import '../manager/home_post_cubit.dart';
+import '../widgets/postWidget.dart';
 
 class Homepage extends StatelessWidget {
   @override
@@ -41,31 +43,7 @@ class Homepage extends StatelessWidget {
   }
 }
 
-class PostWidget extends StatelessWidget {
-  final PostModel post;
 
-  const PostWidget({Key? key, required this.post}) : super(key: key);
 
-  @override
-  Widget build(BuildContext context) {
-    return Card(
-      margin: EdgeInsets.all(10),
-      child: Column(
-        children: [
-          // Post header with user info
-          ListTile(
-            title: Text(post.username ?? "Unknown User"),
-          ),
-          // Post image
-          Image.network(post.imageURL ?? ""),
-          // Post description
-          Padding(
-            padding: const EdgeInsets.all(8.0),
-            child: Text(post.description ?? "No description"),
-          ),
 
-        ],
-      ),
-    );
-  }
-}
+

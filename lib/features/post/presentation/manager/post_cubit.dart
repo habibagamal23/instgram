@@ -3,11 +3,14 @@ import 'dart:io';
 
 import 'package:bloc/bloc.dart';
 import 'package:cloud_firestore/cloud_firestore.dart';
+import 'package:firebase_auth/firebase_auth.dart';
 import 'package:flutter/cupertino.dart';
 import 'package:instaflutter/features/register/data/models/UserModel.dart';
 import 'package:meta/meta.dart';
 import 'package:uuid/uuid.dart';
 
+import '../../../../core/di/di.dart';
+import '../../../../core/firebase/firebase_auth_service.dart';
 import '../../../profileUser/presentation/manager/profile_cubit.dart';
 import '../../data/models/postmodel.dart';
 import '../../data/repositories/postrepo.dart';
@@ -24,7 +27,6 @@ class PostCubit extends Cubit<PostState> {
   final formKey = GlobalKey<FormState>();
 
   Future<void> createPost(UserModel currentUser) async {
-
     emit(CreatePostLoading());
 
     try {
@@ -85,4 +87,8 @@ class PostCubit extends Cubit<PostState> {
     );
   }
 
+  var currentUid = getIt<FirebaseAuthService>().currentUser!.uid;
+  void tabLikes(postId, islike) async {
+    await postRepository.likePost(postId, currentUid, islike);
+  }
 }

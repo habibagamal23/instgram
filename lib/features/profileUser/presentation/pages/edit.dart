@@ -14,7 +14,10 @@ class EditProfileScreen extends StatelessWidget {
         child: Form(
           child: Column(
             children: [
-
+              TextFormField(
+                controller: profileCubit.username,
+                decoration: InputDecoration(labelText: "username"),
+              ),
               TextFormField(
                 controller: profileCubit.bioController,
                 decoration: InputDecoration(labelText: "Bio"),

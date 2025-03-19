@@ -18,7 +18,7 @@ class ProfileScreen extends StatelessWidget {
       body: BlocConsumer<ProfileCubit, ProfileState>(
         listener: (context, state) {
           if(state is ProfileUpdated){
-            debugPrint("upateding user profile");
+            debugPrint("upateding user profileby user name ${state.user.username}");
             BlocProvider.of<ProfileCubit>(context).fetchUserProfile();
           }
         },

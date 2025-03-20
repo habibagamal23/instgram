@@ -12,7 +12,7 @@ class AppRouter {
     routes: [
       GoRoute(
         path: ConstantsRoutes.registerScreen,
-        builder: (context, state) =>  RegisterScreen(),
+        builder: (context, state) =>  LoginScreen(),
       ),
       GoRoute(
         path: ConstantsRoutes.homeScreen,

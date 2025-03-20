@@ -3,6 +3,7 @@ import 'package:firebase_storage/firebase_storage.dart';
 import 'package:get_it/get_it.dart';
 import 'package:firebase_auth/firebase_auth.dart';
 import 'package:instaflutter/features/home/presentation/manager/home_post_cubit.dart';
+import 'package:instaflutter/features/post/presentation/manager/comments_cubit.dart';
 import 'package:instaflutter/features/register/presentation/manager/login_cubit.dart';
 
 import '../../features/post/data/repositories/postrepo.dart';
@@ -59,5 +60,9 @@ Future<void> setupGetIt() async {
 //home cubit
   getIt.registerFactory<HomePostCubit>(
           () => HomePostCubit(getIt<PostRepositoryImplementation>()));
+
+  getIt.registerFactory<CommentsCubit>(
+          () => CommentsCubit(getIt<PostRepositoryImplementation>()));
+
 }
 

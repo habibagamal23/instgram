@@ -6,6 +6,7 @@ import 'package:flutter/material.dart';
 
 import '../../../../core/di/di.dart';
 import '../../../../core/firebase/firebase_storage.dart';
+import '../models/commetmodel.dart';
 import '../models/postmodel.dart';
 
 class PostRepositoryImplementation {
@@ -76,5 +77,38 @@ class PostRepositoryImplementation {
         "totalLikes": FieldValue.increment(-1)
       });
     }
+  }
+
+  Future createComment(CommentModel comment) async {
+    await firestore
+        .collection("posts")
+        .doc(comment.postId)
+        .collection("comments")
+        .doc(comment.commentId)
+        .set(comment.toFirestore());
+
+    DocumentReference postRef =
+        firestore.collection("posts").doc(comment.postId);
+    await postRef.update({
+      "totalComments": FieldValue.increment(1),
+      "comments": FieldValue.arrayUnion([comment.commentId])
+    });
+  }
+
+  Stream<List<CommentModel>> getComments(String postId) {
+    final commentCollection = firestore
+        .collection("posts")
+        .doc(postId)
+        .collection("comments")
+        .orderBy("createdAt", descending: true);
+
+    return commentCollection.snapshots().map((querySnapshot) => querySnapshot
+        .docs
+        .map((comment) => CommentModel.fromFirestore(comment.data()))
+        .toList());
+  }
+
+  Future deletePost(String postId) async {
+    await firestore.collection("posts").doc(postId).delete();
   }
 }

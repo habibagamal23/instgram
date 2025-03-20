@@ -1,3 +1,5 @@
+import 'dart:async';
+
 import 'package:bloc/bloc.dart';
 import 'package:meta/meta.dart';
 
@@ -11,9 +13,11 @@ class HomePostCubit extends Cubit<HomePostState> {
 
   HomePostCubit(this.postRepository) : super(HomePostInitial());
 
+  StreamSubscription<List<PostModel>>? postSubscription;
+
   void fetchHomePosts() {
     emit(HomePostLoading());
-    postRepository.getAllHomePosts().listen(
+    postSubscription=  postRepository.getAllHomePosts().listen(
           (posts) {
         emit(HomePostLoaded(posts));
       },
@@ -23,5 +27,10 @@ class HomePostCubit extends Cubit<HomePostState> {
     );
   }
 
+  @override
+  Future<void> close() {
+    postSubscription?.cancel();
+    return super.close();
+  }
 
 }

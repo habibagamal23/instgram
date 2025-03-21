@@ -2,6 +2,8 @@ import 'package:flutter/material.dart';
 
 import 'package:firebase_auth/firebase_auth.dart';
 
+import '../../../exploer/exploer/presentation/pages/exploerScreen.dart';
+import '../../../exploer/exploer/presentation/widget/SearchMainWidget.dart';
 import '../../../post/presentation/pages/addpostscreen.dart';
 import '../../../profileUser/presentation/pages/profileScreeen.dart';
 import 'homepage.dart';
@@ -48,7 +50,7 @@ class _MainScreenState extends State<MainScreen> {
         physics: const NeverScrollableScrollPhysics(), // Disable swiping
         children: [
           Homepage(),
-          Homepage(),
+          ExplorePage(),
           AddPostScreen(),
           ProfileScreen(),
         ],

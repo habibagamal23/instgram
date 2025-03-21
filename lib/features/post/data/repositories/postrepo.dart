@@ -31,6 +31,17 @@ class PostRepositoryImplementation {
     }
   }
 
+  Stream<List<PostModel>> getExploerPosts(String userId) {
+    debugPrint("getExploerPosts $userId");
+    final ExploerpostCollection =
+        firestore.collection("posts").orderBy("createdAT", descending: true);
+    return ExploerpostCollection.snapshots().map((snapshot) => snapshot.docs
+        .map((doc) =>
+            PostModel.fromFirestore(doc.data() as Map<String, dynamic>))
+        .where((post) => post.userID != userId)
+        .toList());
+  }
+
   // Stream for home posts
   Stream<List<PostModel>> getAllHomePosts() {
     final postCollection =

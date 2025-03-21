@@ -2,8 +2,6 @@
 class Assets {
   Assets._();
 
-  static const String blocExploersCubit = 'lib/features/exploer/exploer/presentation/bloc/exploers_cubit.dart';
-  static const String blocExploersState = 'lib/features/exploer/exploer/presentation/bloc/exploers_state.dart';
   static const String coreFirebaseFirebaseStorage = 'lib/core/firebase/firebase_storage.dart~';
   static const String dataRepositoriesAuthRepositoryImpl = 'lib/features/register/data/repositories/auth_repository_impl.dart~';
   static const String dataRepositoriesRepostiryprofile = 'lib/features/profileUser/data/repositories/repostiryprofile.dart~';

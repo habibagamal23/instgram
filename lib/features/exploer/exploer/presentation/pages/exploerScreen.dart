@@ -3,6 +3,8 @@ import 'package:flutter_bloc/flutter_bloc.dart';
 import 'package:instaflutter/features/exploer/exploer/presentation/bloc/exploers_cubit.dart';
 
 import '../../../../../core/di/di.dart';
+import '../../data/repository/searchrepo.dart';
+import '../bloc/search_cubit.dart';
 import '../widget/SearchMainWidget.dart';
 
 class ExplorePage extends StatelessWidget {
@@ -10,8 +12,11 @@ class ExplorePage extends StatelessWidget {
 
   @override
   Widget build(BuildContext context) {
-    return BlocProvider(create: (context) => getIt<ExploersCubit>(),
-      child: SearchMainWidget(),
+    return MultiBlocProvider(providers: [
+
+      BlocProvider(create: (context) => getIt<ExploersCubit>()),
+
+    ], child: SearchMainWidget(),
     );
   }
 }

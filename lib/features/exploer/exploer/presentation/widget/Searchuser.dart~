@@ -1,0 +1,48 @@
+import 'package:flutter/material.dart';
+import 'package:flutter_bloc/flutter_bloc.dart';
+
+import '../bloc/search_cubit.dart';
+
+class Searchuser extends StatefulWidget {
+  const Searchuser ({super.key});
+
+  @override
+  _State createState() => _State();
+}
+
+class _State extends State<Searchuser> {
+  @override
+  void initState() {
+    // TODO: implement initState
+    super.initState();
+  }
+  @override
+  Widget build(BuildContext context) {
+    return BlocBuilder<SearchCubit, SearchState>(
+        builder: (context, state) {
+          if (state is SearchLoading) {
+            return Center(child: CircularProgressIndicator());
+          }
+          if (state is SearchSuccess) {
+            return ListView.builder(
+              itemCount: state.users.length,
+              itemBuilder: (context, index) {
+                final user = state.users[index];
+                return ListTile(
+                  title: Text(user.username!),
+                  subtitle: Text(user.email!), // Adjust as needed
+                  leading: CircleAvatar(
+                    backgroundImage: NetworkImage(user.profileUrl!),
+                  ),
+                );
+              },
+            );
+          }
+          if (state is SearchError) {
+            return Center(child: Text(state.message));
+          }
+          return Center(child: Text("No results"));
+        },
+      );
+  }
+}

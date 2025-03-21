@@ -9,6 +9,7 @@ import 'package:instaflutter/features/register/presentation/manager/login_cubit.
 import 'core/di/di.dart';
 import 'core/firebase/firebase_storage.dart';
 import 'core/routes/app_router.dart';
+import 'features/exploer/exploer/presentation/bloc/search_cubit.dart';
 import 'features/post/data/repositories/postrepo.dart';
 import 'features/post/presentation/manager/post_cubit.dart';
 import 'features/profileUser/data/repositories/repostiryprofile.dart';
@@ -31,6 +32,7 @@ void main() async {
         create: (context) => getIt<ProfileCubit>()..fetchUserProfile()),
     BlocProvider(create: (context) => getIt<PostCubit>()),
     BlocProvider(create: (context) => LoginCubit()),
+    BlocProvider(create: (context) => getIt<SearchCubit>())
   ], child: MyApp()));
 }
 

@@ -3,6 +3,7 @@ import 'package:flutter_bloc/flutter_bloc.dart';
 import 'package:flutter_staggered_grid_view/flutter_staggered_grid_view.dart';
 
 import '../bloc/exploers_cubit.dart';
+import '../pages/searchpage.dart';
 import 'inputSearch.dart';
 
 
@@ -31,13 +32,35 @@ class _SearchMainWidgetState extends State<SearchMainWidget> {
           // Search box at the top
           Padding(
             padding: const EdgeInsets.all(8.0),
-            child: InputWidget(),
-          ),
+            child: InkWell(
+              onTap: () {
+                Navigator.push(
+                  context,
+                  MaterialPageRoute(builder: (context) => SearchPage()),
+                );
+              },
+              child: Container(
+                width: double.infinity,
+                height: 45,
+                decoration: BoxDecoration(
+                  color: Colors.grey.withOpacity(.3),
+                  borderRadius: BorderRadius.circular(15),
+                ),
+                child: Center(
+                  child: Text(
+                    "Search for users...",
+                    style: TextStyle(color: Colors.grey),
+                  ),
+                ),
+              ),
+            ),
+    ),
+
           // Expanded area for the grid
           Expanded(
             child: Padding(
               padding: const EdgeInsets.all(8.0),
-              child: BlocBuilder<ExploersCubit, ExploersState>(
+              child:BlocBuilder<ExploersCubit, ExploersState>(
                   builder: (context, state) {
                     if(state is ExploersLoading){
                       return Center(child: CircularProgressIndicator());
@@ -69,8 +92,8 @@ class _SearchMainWidgetState extends State<SearchMainWidget> {
                       );
                     }
 
-               return  Center(child: Text("No posts found"));
-              })
+                    return  Center(child: Text("No posts found"));
+                  })
             ),
           ),
         ],

@@ -4,6 +4,8 @@ class Assets {
 
   static const String blocExploersCubit = 'lib/features/exploer/exploer/presentation/bloc/exploers_cubit.dart';
   static const String blocExploersState = 'lib/features/exploer/exploer/presentation/bloc/exploers_state.dart';
+  static const String blocOntherprofileCubit = 'lib/features/exploer/exploer/presentation/bloc/ontherprofile_cubit.dart';
+  static const String blocOntherprofileState = 'lib/features/exploer/exploer/presentation/bloc/ontherprofile_state.dart';
   static const String blocSearchCubit = 'lib/features/exploer/exploer/presentation/bloc/search_cubit.dart';
   static const String blocSearchState = 'lib/features/exploer/exploer/presentation/bloc/search_state.dart';
   static const String coreFirebaseFirebaseStorage = 'lib/core/firebase/firebase_storage.dart~';
@@ -36,6 +38,7 @@ class Assets {
   static const String pagesHomepage = 'lib/features/home/presentation/pages/homepage.dart';
   static const String pagesLoginscreen = 'lib/features/register/presentation/pages/loginscreen.dart';
   static const String pagesMainScreen = 'lib/features/home/presentation/pages/mainScreen.dart';
+  static const String pagesOntherProfilescreen = 'lib/features/exploer/exploer/presentation/pages/ontherProfilescreen.dart';
   static const String pagesProfileScreeen = 'lib/features/profileUser/presentation/pages/profileScreeen.dart';
   static const String pagesRegisterScreen = 'lib/features/register/presentation/pages/register_screen.dart';
   static const String presentationBlocExploersCubit = 'lib/features/exploer/exploer/presentation/bloc/exploers_cubit.dart~';

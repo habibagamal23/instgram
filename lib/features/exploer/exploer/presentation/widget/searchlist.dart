@@ -1,9 +1,10 @@
-
 import 'package:flutter/material.dart';
 import 'package:flutter_bloc/flutter_bloc.dart';
 import 'package:flutter_staggered_grid_view/flutter_staggered_grid_view.dart';
 import '../bloc/exploers_cubit.dart';
+import '../bloc/ontherprofile_cubit.dart';
 import '../bloc/search_cubit.dart';
+import '../pages/ontherProfilescreen.dart';
 
 class Searchlist extends StatelessWidget {
   const Searchlist({super.key});
@@ -20,12 +21,30 @@ class Searchlist extends StatelessWidget {
             itemCount: searchState.users.length,
             itemBuilder: (context, index) {
               final user = searchState.users[index];
-              return ListTile(
-                title: Text(user.username!),
-                subtitle: Text(user.email!),
-                leading: CircleAvatar(
-                  backgroundImage: NetworkImage(user.profileUrl!),
+              return InkWell(
+                onTap: () {
+                  BlocProvider.of<OntherprofileCubit>(context)
+                      .fetchUserProfile(user.uid!);
+                  Navigator.push(
+                      context,
+                      MaterialPageRoute(
+                          builder: (context) => Ontherprofilescreen()));
+                },
+                child: Card(
+                  elevation: 1,
+                  color: Colors.grey.shade50,
+                  shape: RoundedRectangleBorder(
+                    borderRadius: BorderRadius.circular(8),
+                  ),
+                  child: ListTile(
+                    title: Text(user.username!),
+                    subtitle: Text(user.email!),
+                    leading: CircleAvatar(
+                      backgroundImage: NetworkImage(user.profileUrl!),
+                    ),
+                  ),
                 ),
+
               );
             },
           );

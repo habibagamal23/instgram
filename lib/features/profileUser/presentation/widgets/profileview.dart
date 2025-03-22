@@ -1,5 +1,7 @@
 import 'package:flutter/material.dart';
 import 'package:flutter_bloc/flutter_bloc.dart';
+import 'package:instaflutter/core/di/di.dart';
+import 'package:instaflutter/core/firebase/firebase_auth_service.dart';
 
 import '../../../post/data/models/postmodel.dart';
 import '../../../post/presentation/manager/post_cubit.dart';
@@ -166,6 +168,7 @@ class Profileviewbasics extends StatelessWidget {
           SizedBox(
             height: 1,
           ),
+        user.uid==getIt<FirebaseAuthService>().currentUser!.uid?
           ElevatedButton(
             onPressed: () {
               Navigator.push(
@@ -176,7 +179,12 @@ class Profileviewbasics extends StatelessWidget {
               );
             },
             child: Text("Edit Profile"),
-          ),
+          ): ElevatedButton(
+          onPressed: () {
+
+          },
+          child: Text("Follow"),
+        )
         ],
       ),
     );

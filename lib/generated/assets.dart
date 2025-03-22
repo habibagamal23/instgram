@@ -7,13 +7,13 @@ class Assets {
   static const String blocSearchCubit = 'lib/features/exploer/exploer/presentation/bloc/search_cubit.dart';
   static const String blocSearchState = 'lib/features/exploer/exploer/presentation/bloc/search_state.dart';
   static const String coreFirebaseFirebaseStorage = 'lib/core/firebase/firebase_storage.dart~';
+  static const String coreRoutesAppRouter = 'lib/core/routes/app_router.dart~';
   static const String dataRepositoriesAuthRepositoryImpl = 'lib/features/register/data/repositories/auth_repository_impl.dart~';
   static const String dataRepositoriesRepostiryprofile = 'lib/features/profileUser/data/repositories/repostiryprofile.dart~';
   static const String diDi = 'lib/core/di/di.dart';
   static const String firebaseFirebaseAuthService = 'lib/core/firebase/firebase_auth_service.dart';
   static const String firebaseFirebaseStorage = 'lib/core/firebase/firebase_storage.dart';
   static const String generatedAssets = 'lib/generated/assets.dart';
-  static const String instaflutterLibMain = 'lib/main.dart~';
   static const String libFirebaseOptions = 'lib/firebase_options.dart';
   static const String libMain = 'lib/main.dart';
   static const String managerCommentsCubit = 'lib/features/post/presentation/manager/comments_cubit.dart';
@@ -38,7 +38,6 @@ class Assets {
   static const String pagesMainScreen = 'lib/features/home/presentation/pages/mainScreen.dart';
   static const String pagesProfileScreeen = 'lib/features/profileUser/presentation/pages/profileScreeen.dart';
   static const String pagesRegisterScreen = 'lib/features/register/presentation/pages/register_screen.dart';
-  static const String pagesSearchpage = 'lib/features/exploer/exploer/presentation/pages/searchpage.dart';
   static const String presentationBlocExploersCubit = 'lib/features/exploer/exploer/presentation/bloc/exploers_cubit.dart~';
   static const String presentationManagerCommentsCubit = 'lib/features/post/presentation/manager/comments_cubit.dart~';
   static const String presentationWidgetsChooseImage = 'lib/features/register/presentation/widgets/chooseImage.dart~';
@@ -53,11 +52,11 @@ class Assets {
   static const String repositorySearchrepo = 'lib/features/exploer/exploer/data/repository/searchrepo.dart';
   static const String routesAppRouter = 'lib/core/routes/app_router.dart';
   static const String routesConstantsRoutes = 'lib/core/routes/constants_routes.dart';
-  static const String widgetExploerList = 'lib/features/exploer/exploer/presentation/widget/ExploerList.dart';
-  static const String widgetInputSearch = 'lib/features/exploer/exploer/presentation/widget/inputSearch.dart';
+  static const String widgetExplorList = 'lib/features/exploer/exploer/presentation/widget/ExplorList.dart';
   static const String widgetInstagramButton = 'lib/core/widget/InstagramButton.dart';
   static const String widgetInstagramTextField = 'lib/core/widget/InstagramTextField.dart';
   static const String widgetSearchMainWidget = 'lib/features/exploer/exploer/presentation/widget/SearchMainWidget.dart';
+  static const String widgetSearchlist = 'lib/features/exploer/exploer/presentation/widget/searchlist.dart';
   static const String widgetSearchuser = 'lib/features/exploer/exploer/presentation/widget/Searchuser.dart~';
   static const String widgetsChooseImage = 'lib/features/register/presentation/widgets/chooseImage.dart';
   static const String widgetsCommensList = 'lib/features/home/presentation/widgets/commensList.dart';

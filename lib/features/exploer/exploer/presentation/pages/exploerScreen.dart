@@ -15,7 +15,7 @@ class ExplorePage extends StatelessWidget {
     return MultiBlocProvider(providers: [
 
       BlocProvider(create: (context) => getIt<ExploersCubit>()),
-
+BlocProvider(create: (context) => getIt<SearchCubit>())
     ], child: SearchMainWidget(),
     );
   }

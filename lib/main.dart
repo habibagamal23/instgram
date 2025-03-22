@@ -32,7 +32,6 @@ void main() async {
         create: (context) => getIt<ProfileCubit>()..fetchUserProfile()),
     BlocProvider(create: (context) => getIt<PostCubit>()),
     BlocProvider(create: (context) => LoginCubit()),
-    BlocProvider(create: (context) => getIt<SearchCubit>())
   ], child: MyApp()));
 }
 

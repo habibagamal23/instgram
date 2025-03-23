@@ -17,10 +17,9 @@ class OntherprofileCubit extends Cubit<OntherprofileState> {
   Future<void> fetchUserProfile(String userid) async {
     emit(OntherprofileLoading());
     try {
-        final user = await repo.getOntheruserProfile(userid);
-          emit(OntherprofileLoaded(user));
-          debugPrint("user ${user!.email}");
-
+      final user = await repo.getOntheruserProfile(userid);
+      emit(OntherprofileLoaded(user));
+      debugPrint("user ${user!.email}");
     } catch (e) {
       emit(OntherprofileError("Error loading profile: $e"));
     }
@@ -28,12 +27,15 @@ class OntherprofileCubit extends Cubit<OntherprofileState> {
 
   var currentUid = getIt<FirebaseAuthService>().currentUser!.uid;
 
-  Future<void> FollowAndUnfollow(String ontherid, isAlreadyFollowing) async {
+  Future<void> followAndUnfollow(String targetUid) async {
+    emit(OntherprofileLoading());
     try {
-      await repo.FollowAndUnfollow(currentUid, ontherid, isAlreadyFollowing);
+      await repo.toggleFollow(currentUid, targetUid);
+      // Optionally, re-fetch the updated user profile here
+      final updatedUser = await repo.getOntheruserProfile(targetUid);
+      emit(OntherprofileLoaded(updatedUser));
     } catch (e) {
-      throw Exception("Error follow profile: $e");
+      emit(OntherprofileError("Error toggling follow: $e"));
     }
   }
-
 }

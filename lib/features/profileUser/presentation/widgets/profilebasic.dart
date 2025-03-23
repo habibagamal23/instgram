@@ -8,6 +8,8 @@ import '../../../post/data/models/postmodel.dart';
 import '../../../post/presentation/manager/post_cubit.dart';
 import '../../../register/data/models/UserModel.dart';
 import '../manager/follow_cubit.dart';
+import '../manager/profile_cubit.dart';
+import '../pages/FollowScreen.dart';
 import '../pages/edit.dart';
 
 class Profileviewbasics extends StatefulWidget {
@@ -21,15 +23,19 @@ class Profileviewbasics extends StatefulWidget {
 
 class _ProfileviewbasicsState extends State<Profileviewbasics> {
 
-
-
+  late bool isFollowing;
+late String currentUid;
+  @override
+  void initState() {
+    super.initState();
+     currentUid = getIt<FirebaseAuthService>().currentUser!.uid;
+    isFollowing = (widget.user.followers?.contains(currentUid) ?? false) ||
+        (widget.user.following?.contains(currentUid) ?? false);
+  }
 
   @override
   Widget build(BuildContext context) {
-
-    String currentUid = getIt<FirebaseAuthService>().currentUser!.uid;
-    bool isFollowing= widget.user.followers?.contains(currentUid) ?? false;
-    var user=widget.user;
+    var user = widget.user;
     return Container(
       color: Colors.white,
       child: Column(
@@ -76,6 +82,10 @@ class _ProfileviewbasicsState extends State<Profileviewbasics> {
                             context
                                 .read<FollowCubit>()
                                 .followUsers(user.followers!);
+                            Navigator.push(
+                                context,
+                                MaterialPageRoute(
+                                    builder: (context) => FollowListView()));
                           },
                           child: Text(
                             'followers',
@@ -88,6 +98,10 @@ class _ProfileviewbasicsState extends State<Profileviewbasics> {
                             context
                                 .read<FollowCubit>()
                                 .followUsers(user.following!);
+                            Navigator.push(
+                                context,
+                                MaterialPageRoute(
+                                    builder: (context) => FollowListView()));
                           },
                           child: Text(
                             'following',
@@ -121,24 +135,38 @@ class _ProfileviewbasicsState extends State<Profileviewbasics> {
           ),
           user.uid == currentUid
               ? ElevatedButton(
-            onPressed: () {
-              Navigator.push(
-                context,
-                MaterialPageRoute(
-                  builder: (context) => EditProfileScreen(),
+                  onPressed: () {
+                    Navigator.push(
+                      context,
+                      MaterialPageRoute(
+                        builder: (context) => EditProfileScreen(),
+                      ),
+                    );
+                  },
+                  child: Text("Edit Profile"),
+                )
+              : Row(
+                  children: [
+                    ElevatedButton(
+                      onPressed: () async{
+                        await context
+                            .read<OntherprofileCubit>()
+                            .followAndUnfollow(user.uid!);
+                        setState(() {
+                          isFollowing = !isFollowing;
+                        });
+                      },
+                      child: Text(isFollowing ? "Following" : "Follow"),
+                    ),
+                    SizedBox(width: 10),
+                    ElevatedButton(
+                      onPressed: () {
+                        // Implement message functionality here
+                      },
+                      child: Text("Message"),
+                    ),
+                  ],
                 ),
-              );
-            },
-            child: Text("Edit Profile"),
-          )
-              : ElevatedButton(
-            onPressed: () {
-              context
-                  .read<OntherprofileCubit>()
-                  .FollowAndUnfollow(user.uid!, !isFollowing);
-            },
-            child: Text(isFollowing ? "Following" : "Follow"),
-          )
         ],
       ),
     );

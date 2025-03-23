@@ -3,6 +3,7 @@ import 'package:firebase_auth/firebase_auth.dart';
 import 'package:flutter/material.dart';
 import 'package:meta/meta.dart';
 
+import '../../../../core/di/di.dart';
 import '../../../../core/firebase/firebase_auth_service.dart';
 import '../../../register/data/models/UserModel.dart';
 import '../../data/repositories/repostiryprofile.dart';
@@ -79,7 +80,7 @@ class ProfileCubit extends Cubit<ProfileState> {
       currentUser = updatedUser;
       debugPrint("user updated ${updatedUser.email}");
 
-    // Update posts **only if username or profileUrl changed**
+      // Update posts **only if username or profileUrl changed**
       // update also post info  when this is updated
       await profileRepository.updateUserPostsInfo(
         currentUser!.uid!,
@@ -92,6 +93,16 @@ class ProfileCubit extends Cubit<ProfileState> {
       emit(ProfileUpdated(updatedUser));
     } catch (e) {
       emit(ProfileError("Error updating profile: $e"));
+    }
+  }
+
+  var currentUid = getIt<FirebaseAuthService>().currentUser!.uid;
+
+  Future<void> FollowAndUnfollow(String ontherid) async {
+    try {
+      await profileRepository.FollowAndUnfollow(currentUid, ontherid);
+    } catch (e) {
+      throw Exception("Error follow profile: $e");
     }
   }
 }

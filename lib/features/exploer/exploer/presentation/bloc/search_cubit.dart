@@ -40,6 +40,8 @@ class SearchCubit extends Cubit<SearchState> {
     }
   }
 
+
+
   @override
   Future<void> close() {
     _queryController.close();

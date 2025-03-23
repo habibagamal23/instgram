@@ -8,10 +8,10 @@ class Assets {
   static const String blocOntherprofileState = 'lib/features/exploer/exploer/presentation/bloc/ontherprofile_state.dart';
   static const String blocSearchCubit = 'lib/features/exploer/exploer/presentation/bloc/search_cubit.dart';
   static const String blocSearchState = 'lib/features/exploer/exploer/presentation/bloc/search_state.dart';
+  static const String coreDiDi = 'lib/core/di/di.dart~';
   static const String coreFirebaseFirebaseStorage = 'lib/core/firebase/firebase_storage.dart~';
   static const String coreRoutesAppRouter = 'lib/core/routes/app_router.dart~';
   static const String dataRepositoriesAuthRepositoryImpl = 'lib/features/register/data/repositories/auth_repository_impl.dart~';
-  static const String dataRepositoriesRepostiryprofile = 'lib/features/profileUser/data/repositories/repostiryprofile.dart~';
   static const String diDi = 'lib/core/di/di.dart';
   static const String firebaseFirebaseAuthService = 'lib/core/firebase/firebase_auth_service.dart';
   static const String firebaseFirebaseStorage = 'lib/core/firebase/firebase_storage.dart';
@@ -20,6 +20,8 @@ class Assets {
   static const String libMain = 'lib/main.dart';
   static const String managerCommentsCubit = 'lib/features/post/presentation/manager/comments_cubit.dart';
   static const String managerCommentsState = 'lib/features/post/presentation/manager/comments_state.dart';
+  static const String managerFollowCubit = 'lib/features/profileUser/presentation/manager/follow_cubit.dart';
+  static const String managerFollowState = 'lib/features/profileUser/presentation/manager/follow_state.dart';
   static const String managerHomePostCubit = 'lib/features/home/presentation/manager/home_post_cubit.dart';
   static const String managerHomePostState = 'lib/features/home/presentation/manager/home_post_state.dart';
   static const String managerLoginCubit = 'lib/features/register/presentation/manager/login_cubit.dart';
@@ -35,6 +37,7 @@ class Assets {
   static const String pagesAddpostscreen = 'lib/features/post/presentation/pages/addpostscreen.dart';
   static const String pagesEdit = 'lib/features/profileUser/presentation/pages/edit.dart';
   static const String pagesExploerScreen = 'lib/features/exploer/exploer/presentation/pages/exploerScreen.dart';
+  static const String pagesFollowScreen = 'lib/features/profileUser/presentation/pages/FollowScreen.dart';
   static const String pagesHomepage = 'lib/features/home/presentation/pages/homepage.dart';
   static const String pagesLoginscreen = 'lib/features/register/presentation/pages/loginscreen.dart';
   static const String pagesMainScreen = 'lib/features/home/presentation/pages/mainScreen.dart';
@@ -45,7 +48,6 @@ class Assets {
   static const String presentationManagerCommentsCubit = 'lib/features/post/presentation/manager/comments_cubit.dart~';
   static const String presentationWidgetsChooseImage = 'lib/features/register/presentation/widgets/chooseImage.dart~';
   static const String presentationWidgetsCommentInput = 'lib/features/home/presentation/widgets/commentInput.dart~';
-  static const String presentationWidgetsProfileview = 'lib/features/profileUser/presentation/widgets/profileview.dart~';
   static const String registerRegisterCubit = 'lib/features/register/presentation/manager/register/register_cubit.dart';
   static const String registerRegisterState = 'lib/features/register/presentation/manager/register/register_state.dart';
   static const String repositoriesAuthRepository = 'lib/features/register/data/repositories/auth_repository.dart';
@@ -66,8 +68,10 @@ class Assets {
   static const String widgetsCommentInput = 'lib/features/home/presentation/widgets/commentInput.dart';
   static const String widgetsGenderchoose = 'lib/features/register/presentation/widgets/Genderchoose.dart';
   static const String widgetsPostWidget = 'lib/features/home/presentation/widgets/postWidget.dart';
+  static const String widgetsProfilebasic = 'lib/features/profileUser/presentation/widgets/profilebasic.dart';
   static const String widgetsProfileview = 'lib/features/profileUser/presentation/widgets/profileview.dart';
   static const String widgetsRegisterButton = 'lib/features/register/presentation/widgets/register_button.dart';
   static const String widgetsRegisterForm = 'lib/features/register/presentation/widgets/register_form.dart';
+  static const String widgetsTabs = 'lib/features/profileUser/presentation/widgets/tabs.dart';
 
 }

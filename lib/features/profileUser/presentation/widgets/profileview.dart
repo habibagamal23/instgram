@@ -2,11 +2,16 @@ import 'package:flutter/material.dart';
 import 'package:flutter_bloc/flutter_bloc.dart';
 import 'package:instaflutter/core/di/di.dart';
 import 'package:instaflutter/core/firebase/firebase_auth_service.dart';
+import 'package:instaflutter/features/profileUser/presentation/widgets/profilebasic.dart';
+import 'package:instaflutter/features/profileUser/presentation/widgets/tabs.dart';
 
+import '../../../exploer/exploer/presentation/bloc/ontherprofile_cubit.dart';
 import '../../../post/data/models/postmodel.dart';
 import '../../../post/presentation/manager/post_cubit.dart';
 import '../../../register/data/models/UserModel.dart';
+import '../manager/follow_cubit.dart';
 import '../pages/edit.dart';
+
 class ProfileView extends StatefulWidget {
   final UserModel user;
 
@@ -22,6 +27,7 @@ class _ProfileViewState extends State<ProfileView> {
     super.initState();
     context.read<PostCubit>().startListeningToPosts(widget.user.uid!);
   }
+
   @override
   Widget build(BuildContext context) {
     return DefaultTabController(
@@ -38,7 +44,6 @@ class _ProfileViewState extends State<ProfileView> {
             SliverFillRemaining(
               child: TabBarView(
                 children: [
-
                   // Tab for Posts
                   BlocBuilder<PostCubit, PostState>(
                     builder: (context, state) {
@@ -47,7 +52,8 @@ class _ProfileViewState extends State<ProfileView> {
                       } else if (state is PostLoaded) {
                         return GridView.builder(
                           itemCount: state.posts.length,
-                          gridDelegate: SliverGridDelegateWithFixedCrossAxisCount(
+                          gridDelegate:
+                              SliverGridDelegateWithFixedCrossAxisCount(
                             crossAxisCount: 3,
                             mainAxisSpacing: 4,
                             crossAxisSpacing: 4,
@@ -59,7 +65,8 @@ class _ProfileViewState extends State<ProfileView> {
                                 // Handle post tap (e.g., navigate to post details)
                               },
                               child: Image.network(
-                                post.imageURL ?? "", // Display the image of the post
+                                post.imageURL ??
+                                    "", // Display the image of the post
                                 fit: BoxFit.cover,
                               ),
                             );
@@ -84,131 +91,4 @@ class _ProfileViewState extends State<ProfileView> {
   }
 }
 
-class Profileviewbasics extends StatelessWidget {
-  final UserModel user;
 
-  const Profileviewbasics({super.key, required this.user});
-
-  @override
-  Widget build(BuildContext context) {
-    return Container(
-      color: Colors.white,
-      child: Column(
-        crossAxisAlignment: CrossAxisAlignment.start,
-        children: [
-          Row(
-            children: [
-              Column(
-                children: [
-                  Row(
-                    children: [
-                      SizedBox(width: 5),
-                      Text(
-                        user.totalPosts.toString(),
-                        style: TextStyle(
-                            fontWeight: FontWeight.bold, fontSize: 16),
-                      ),
-                      SizedBox(width: 45),
-                      Text(
-                        user.totalFollowers.toString(),
-                        style: TextStyle(
-                            fontWeight: FontWeight.bold, fontSize: 16),
-                      ),
-                      SizedBox(width: 70),
-                      Text(
-                        user.totalFollowing.toString(),
-                        style: TextStyle(
-                            fontWeight: FontWeight.bold, fontSize: 16),
-                      )
-                    ],
-                  ),
-                  Row(
-                    children: [
-                      SizedBox(width: 30),
-                      Text(
-                        'posts',
-                        style: TextStyle(
-                          fontWeight: FontWeight.bold,
-                        ),
-                      ),
-                      SizedBox(width: 25),
-                      Text(
-                        'followers',
-                        style: TextStyle(
-                            fontWeight: FontWeight.bold, fontSize: 13),
-                      ),
-                      SizedBox(width: 19),
-                      Text(
-                        'following',
-                        style: TextStyle(
-                            fontWeight: FontWeight.bold, fontSize: 13),
-                      )
-                    ],
-                  )
-                ],
-              )
-            ],
-          ),
-          Padding(
-            padding: const EdgeInsets.symmetric(horizontal: 30.0),
-            child: Column(
-              crossAxisAlignment: CrossAxisAlignment.start,
-              children: [
-                Text(
-                  user.username ?? "No Name",
-                  style: TextStyle(fontSize: 14, fontWeight: FontWeight.w900),
-                ),
-                Text(
-                  user.bio ?? "No Bio",
-                  style: TextStyle(fontSize: 14, fontWeight: FontWeight.w800),
-                ),
-              ],
-            ),
-          ),
-          SizedBox(
-            height: 1,
-          ),
-        user.uid==getIt<FirebaseAuthService>().currentUser!.uid?
-          ElevatedButton(
-            onPressed: () {
-              Navigator.push(
-                context,
-                MaterialPageRoute(
-                  builder: (context) => EditProfileScreen(),
-                ),
-              );
-            },
-            child: Text("Edit Profile"),
-          ): ElevatedButton(
-          onPressed: () {
-
-          },
-          child: Text("Follow"),
-        )
-        ],
-      ),
-    );
-  }
-}
-
-class Tabs extends StatelessWidget {
-  const Tabs({super.key});
-
-  @override
-  Widget build(BuildContext context) {
-    return SizedBox(
-      width: double.infinity,
-      height: 30,
-      child: TabBar(
-        unselectedLabelColor: Colors.grey,
-        indicatorColor: Colors.black,
-        labelColor: Colors.black,
-        tabs: [
-          Icon(Icons.grid_view_rounded),
-          Icon(Icons.video_collection),
-          Icon(Icons.person)
-        ],
-      ),
-    );
-  }
-}

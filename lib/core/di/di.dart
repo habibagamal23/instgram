@@ -13,6 +13,7 @@ import '../../features/exploer/exploer/presentation/bloc/ontherprofile_cubit.dar
 import '../../features/post/data/repositories/postrepo.dart';
 import '../../features/post/presentation/manager/post_cubit.dart';
 import '../../features/profileUser/data/repositories/repostiryprofile.dart';
+import '../../features/profileUser/presentation/manager/follow_cubit.dart';
 import '../../features/profileUser/presentation/manager/profile_cubit.dart';
 import '../../features/register/data/repositories/auth_repository.dart';
 import '../../features/register/data/repositories/auth_repository_impl.dart';
@@ -26,15 +27,16 @@ Future<void> setupGetIt() async {
   // Register Firebase Instances
   getIt.registerLazySingleton<FirebaseAuth>(() => FirebaseAuth.instance);
   getIt.registerLazySingleton<FirebaseStorage>(() => FirebaseStorage.instance);
-  getIt.registerLazySingleton<FirebaseFirestore>(() => FirebaseFirestore.instance);
+  getIt.registerLazySingleton<FirebaseFirestore>(
+      () => FirebaseFirestore.instance);
 
   // Register Services
   getIt.registerLazySingleton<FirebaseAuthService>(
-          () => FirebaseAuthService(getIt<FirebaseAuth>()));
+      () => FirebaseAuthService(getIt<FirebaseAuth>()));
 
   // Only register FirebaseStorageService once
   getIt.registerLazySingleton<FirebaseStorageService>(
-          () => FirebaseStorageService(getIt<FirebaseStorage>()));
+      () => FirebaseStorageService(getIt<FirebaseStorage>()));
 
   // Register Repositories
   getIt.registerFactory<AuthRepository>(() => AuthRepositoryImpl(
@@ -44,13 +46,14 @@ Future<void> setupGetIt() async {
 
   // Register Cubits (Singleton to avoid multiple instances)
   getIt.registerFactory<RegisterCubit>(
-          () => RegisterCubit(authRepository: getIt<AuthRepository>()));
+      () => RegisterCubit(authRepository: getIt<AuthRepository>()));
 
-  getIt.registerLazySingleton<ProfileRepository>(() => ProfileRepository(getIt<FirebaseFirestore>()));
+  getIt.registerLazySingleton<ProfileRepository>(
+      () => ProfileRepository(getIt<FirebaseFirestore>()));
 
   // Profile Cubit
   getIt.registerLazySingleton<ProfileCubit>(
-          () => ProfileCubit(profileRepository: getIt<ProfileRepository>()));
+      () => ProfileCubit(profileRepository: getIt<ProfileRepository>()));
 
   // Post Repository
   getIt.registerLazySingleton<PostRepositoryImplementation>(() =>
@@ -59,24 +62,24 @@ Future<void> setupGetIt() async {
 
   // Post Cubit
   getIt.registerLazySingleton<PostCubit>(
-          () => PostCubit(getIt<PostRepositoryImplementation>()));
+      () => PostCubit(getIt<PostRepositoryImplementation>()));
 
 //home cubit
   getIt.registerFactory<HomePostCubit>(
-          () => HomePostCubit(getIt<PostRepositoryImplementation>()));
+      () => HomePostCubit(getIt<PostRepositoryImplementation>()));
 
   getIt.registerFactory<CommentsCubit>(
-          () => CommentsCubit(getIt<PostRepositoryImplementation>()));
+      () => CommentsCubit(getIt<PostRepositoryImplementation>()));
 
   getIt.registerFactory<ExploersCubit>(
-          () => ExploersCubit(getIt<PostRepositoryImplementation>()));
+      () => ExploersCubit(getIt<PostRepositoryImplementation>()));
   getIt.registerLazySingleton<SearchRepo>(
-          () => SearchRepo(firestore: getIt<FirebaseFirestore>()));
-  getIt.registerFactory<SearchCubit>(
-          () => SearchCubit(getIt<SearchRepo>()));
+      () => SearchRepo(firestore: getIt<FirebaseFirestore>()));
+  getIt.registerFactory<SearchCubit>(() => SearchCubit(getIt<SearchRepo>()));
 
   getIt.registerFactory<OntherprofileCubit>(
-          () => OntherprofileCubit(getIt<SearchRepo>()));
+      () => OntherprofileCubit(getIt<SearchRepo>()));
 
+  getIt.registerLazySingleton<FollowCubit>(
+      () => FollowCubit(getIt<ProfileRepository>()));
 }
-

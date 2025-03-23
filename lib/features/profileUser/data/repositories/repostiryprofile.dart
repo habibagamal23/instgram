@@ -53,4 +53,16 @@ class ProfileRepository {
     }
   }
 
+
+  Future<List<UserModel>> fetchFollowUsers(List<String> followUsersIds) async {
+    QuerySnapshot doc = await FirebaseFirestore.instance
+        .collection('users')
+        .where('uid', whereIn: followUsersIds)
+        .get();
+    List<UserModel> users = doc.docs
+        .map((doc) => UserModel.fromFirestore(doc.data() as Map<String, dynamic>))
+        .toList();
+    return users;
+  }
+
 }

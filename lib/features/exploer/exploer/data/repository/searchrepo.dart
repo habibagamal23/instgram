@@ -60,4 +60,40 @@ class SearchRepo {
   }
 
 
+
+  Future<void> FollowAndUnfollow(String currentUserId, String followedUserId, isAlreadyFollowing) async {
+
+    try {
+
+
+      if (!isAlreadyFollowing) {
+        // Follow: add followedUserId to the current user's following array
+        // and add currentUserId to the followed user's followers array.
+        await firestore.collection("users").doc(currentUserId).update({
+          'following': FieldValue.arrayUnion([followedUserId]),
+          'totalFollowing': FieldValue.increment(1),
+        });
+        await firestore.collection("users").doc(followedUserId).update({
+          'followers': FieldValue.arrayUnion([currentUserId]),
+          'totalFollowers': FieldValue.increment(1),
+        });
+      } else {
+        // Unfollow: remove followedUserId from the current user's following array
+        // and remove currentUserId from the followed user's followers array.
+        await firestore.collection("users").doc(currentUserId).update({
+          'following': FieldValue.arrayRemove([followedUserId]),
+          'totalFollowing': FieldValue.increment(-1),
+        });
+        await firestore.collection("users").doc(followedUserId).update({
+          'followers': FieldValue.arrayRemove([currentUserId]),
+          'totalFollowers': FieldValue.increment(-1),
+        });
+      }
+    } catch (e) {
+      throw Exception("Error toggling follow: $e");
+    }
+  }
+
+
+
 }

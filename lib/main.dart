@@ -5,6 +5,7 @@ import 'package:flutter_bloc/flutter_bloc.dart';
 import 'package:flutter_screenutil/flutter_screenutil.dart';
 import 'package:instaflutter/features/home/presentation/manager/home_post_cubit.dart';
 import 'package:instaflutter/features/post/presentation/manager/comments_cubit.dart';
+import 'package:instaflutter/features/profileUser/presentation/manager/follow_cubit.dart';
 import 'package:instaflutter/features/register/presentation/manager/login_cubit.dart';
 import 'core/di/di.dart';
 import 'core/firebase/firebase_storage.dart';
@@ -34,6 +35,8 @@ void main() async {
     BlocProvider(create: (context) => getIt<PostCubit>()),
     BlocProvider(create: (context) => LoginCubit()),
     BlocProvider(create: (context) => getIt<OntherprofileCubit>()),
+    BlocProvider(create: (context) => getIt<FollowCubit>()),
+
   ], child: MyApp()));
 }
 

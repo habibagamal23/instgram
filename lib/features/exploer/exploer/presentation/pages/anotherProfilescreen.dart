@@ -1,23 +1,26 @@
-
-
-
 import 'package:cloud_firestore/cloud_firestore.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_bloc/flutter_bloc.dart';
 
 import 'package:flutter/material.dart';
+import 'package:instaflutter/features/profileUser/presentation/manager/profile_cubit.dart';
 
 import '../../../../profileUser/presentation/widgets/profileview.dart';
-import '../bloc/ontherprofile_cubit.dart';
+import '../bloc/anothercubit/ontherprofile_cubit.dart';
 
-class Ontherprofilescreen extends StatelessWidget {
-  const Ontherprofilescreen({super.key});
+class anotherprofilescreen extends StatelessWidget {
+  const anotherprofilescreen({super.key});
 
   @override
   Widget build(BuildContext context) {
     return Scaffold(
       appBar: AppBar(title: Text("Profile")),
-        body: BlocBuilder<OntherprofileCubit, OntherprofileState>(
+      body: BlocConsumer<OntherprofileCubit, OntherprofileState>(
+        listener: (context, state) {
+          if (state is OntherprofileLoaded) {
+            BlocProvider.of<ProfileCubit>(context).fetchUserProfile();
+          }
+        },
         builder: (context, state) {
           if (state is OntherprofileLoading) {
             return Center(child: CircularProgressIndicator());
@@ -33,4 +36,3 @@ class Ontherprofilescreen extends StatelessWidget {
     );
   }
 }
-

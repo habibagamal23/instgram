@@ -2,21 +2,24 @@
 class Assets {
   Assets._();
 
-  static const String blocExploersCubit = 'lib/features/exploer/exploer/presentation/bloc/exploers_cubit.dart';
-  static const String blocExploersState = 'lib/features/exploer/exploer/presentation/bloc/exploers_state.dart';
-  static const String blocOntherprofileCubit = 'lib/features/exploer/exploer/presentation/bloc/ontherprofile_cubit.dart';
-  static const String blocOntherprofileState = 'lib/features/exploer/exploer/presentation/bloc/ontherprofile_state.dart';
-  static const String blocSearchCubit = 'lib/features/exploer/exploer/presentation/bloc/search_cubit.dart';
-  static const String blocSearchState = 'lib/features/exploer/exploer/presentation/bloc/search_state.dart';
-  static const String coreDiDi = 'lib/core/di/di.dart~';
+  static const String anthercubitOntherprofileCubit = 'lib/features/exploer/exploer/presentation/bloc/anothercubit/ontherprofile_cubit.dart';
+  static const String anthercubitOntherprofileState = 'lib/features/exploer/exploer/presentation/bloc/anothercubit/ontherprofile_state.dart';
+  static const String blocExploersCubit = 'lib/features/exploer/exploer/presentation/bloc/exploers_cubit.dart~';
+  static const String blocOntherprofileCubit = 'lib/features/exploer/exploer/presentation/bloc/ontherprofile_cubit.dart~';
   static const String coreFirebaseFirebaseStorage = 'lib/core/firebase/firebase_storage.dart~';
   static const String coreRoutesAppRouter = 'lib/core/routes/app_router.dart~';
   static const String dataRepositoriesAuthRepositoryImpl = 'lib/features/register/data/repositories/auth_repository_impl.dart~';
+  static const String dataRepositorySearchrepo = 'lib/features/exploer/exploer/data/repository/searchrepo.dart~';
   static const String diDi = 'lib/core/di/di.dart';
+  static const String explorescubitExploersCubit = 'lib/features/exploer/exploer/presentation/bloc/explorescubit/exploers_cubit.dart';
+  static const String explorescubitExploersState = 'lib/features/exploer/exploer/presentation/bloc/explorescubit/exploers_state.dart';
+  static const String explorescubitSearchCubit = 'lib/features/exploer/exploer/presentation/bloc/explorescubit/search_cubit.dart';
+  static const String explorescubitSearchState = 'lib/features/exploer/exploer/presentation/bloc/explorescubit/search_state.dart';
   static const String firebaseFirebaseAuthService = 'lib/core/firebase/firebase_auth_service.dart';
   static const String firebaseFirebaseStorage = 'lib/core/firebase/firebase_storage.dart';
   static const String generatedAssets = 'lib/generated/assets.dart';
   static const String libFirebaseOptions = 'lib/firebase_options.dart';
+  static const String libGeneratedAssets = 'lib/generated/assets.dart~';
   static const String libMain = 'lib/main.dart';
   static const String managerCommentsCubit = 'lib/features/post/presentation/manager/comments_cubit.dart';
   static const String managerCommentsState = 'lib/features/post/presentation/manager/comments_state.dart';
@@ -41,11 +44,11 @@ class Assets {
   static const String pagesHomepage = 'lib/features/home/presentation/pages/homepage.dart';
   static const String pagesLoginscreen = 'lib/features/register/presentation/pages/loginscreen.dart';
   static const String pagesMainScreen = 'lib/features/home/presentation/pages/mainScreen.dart';
-  static const String pagesOntherProfilescreen = 'lib/features/exploer/exploer/presentation/pages/ontherProfilescreen.dart';
+  static const String pagesOntherProfilescreen = 'lib/features/exploer/exploer/presentation/pages/anotherProfilescreen.dart';
   static const String pagesProfileScreeen = 'lib/features/profileUser/presentation/pages/profileScreeen.dart';
   static const String pagesRegisterScreen = 'lib/features/register/presentation/pages/register_screen.dart';
-  static const String presentationBlocExploersCubit = 'lib/features/exploer/exploer/presentation/bloc/exploers_cubit.dart~';
   static const String presentationManagerCommentsCubit = 'lib/features/post/presentation/manager/comments_cubit.dart~';
+  static const String presentationPagesExploerScreen = 'lib/features/exploer/exploer/presentation/pages/exploerScreen.dart~';
   static const String presentationWidgetsChooseImage = 'lib/features/register/presentation/widgets/chooseImage.dart~';
   static const String presentationWidgetsCommentInput = 'lib/features/home/presentation/widgets/commentInput.dart~';
   static const String registerRegisterCubit = 'lib/features/register/presentation/manager/register/register_cubit.dart';

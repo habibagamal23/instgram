@@ -1,10 +1,10 @@
 import 'package:flutter/material.dart';
 import 'package:flutter_bloc/flutter_bloc.dart';
 import 'package:flutter_staggered_grid_view/flutter_staggered_grid_view.dart';
-import '../bloc/exploers_cubit.dart';
-import '../bloc/ontherprofile_cubit.dart';
-import '../bloc/search_cubit.dart';
-import '../pages/ontherProfilescreen.dart';
+import 'package:instaflutter/features/exploer/exploer/presentation/pages/anotherProfilescreen.dart';
+import '../bloc/explorescubit/exploers_cubit.dart';
+import '../bloc/anothercubit/ontherprofile_cubit.dart';
+import '../bloc/explorescubit/search_cubit.dart';
 
 class Searchlist extends StatelessWidget {
   const Searchlist({super.key});
@@ -24,11 +24,11 @@ class Searchlist extends StatelessWidget {
               return InkWell(
                 onTap: () {
                   BlocProvider.of<OntherprofileCubit>(context)
-                      .fetchUserProfile(user.uid!);
+                      .listenToUserProfile(user.uid!);
                   Navigator.push(
                       context,
                       MaterialPageRoute(
-                          builder: (context) => Ontherprofilescreen()));
+                          builder: (context) => anotherprofilescreen()));
                 },
                 child: Card(
                   elevation: 1,
@@ -44,7 +44,6 @@ class Searchlist extends StatelessWidget {
                     ),
                   ),
                 ),
-
               );
             },
           );

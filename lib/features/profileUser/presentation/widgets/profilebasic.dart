@@ -3,7 +3,7 @@ import 'package:flutter_bloc/flutter_bloc.dart';
 import 'package:instaflutter/core/di/di.dart';
 import 'package:instaflutter/core/firebase/firebase_auth_service.dart';
 
-import '../../../exploer/exploer/presentation/bloc/ontherprofile_cubit.dart';
+import '../../../exploer/exploer/presentation/bloc/anothercubit/ontherprofile_cubit.dart';
 import '../../../post/data/models/postmodel.dart';
 import '../../../post/presentation/manager/post_cubit.dart';
 import '../../../register/data/models/UserModel.dart';
@@ -22,15 +22,13 @@ class Profileviewbasics extends StatefulWidget {
 }
 
 class _ProfileviewbasicsState extends State<Profileviewbasics> {
-
   late bool isFollowing;
-late String currentUid;
+  late String currentUid;
   @override
   void initState() {
     super.initState();
-     currentUid = getIt<FirebaseAuthService>().currentUser!.uid;
-    isFollowing = (widget.user.followers?.contains(currentUid) ?? false) ||
-        (widget.user.following?.contains(currentUid) ?? false);
+    currentUid = getIt<FirebaseAuthService>().currentUser!.uid;
+    isFollowing = (widget.user.followers?.contains(currentUid) ?? false);
   }
 
   @override
@@ -148,10 +146,10 @@ late String currentUid;
               : Row(
                   children: [
                     ElevatedButton(
-                      onPressed: () async{
+                      onPressed: () async {
                         await context
                             .read<OntherprofileCubit>()
-                            .followAndUnfollow(user.uid!);
+                            .followAndUnfollowbystream(user.uid!);
                         setState(() {
                           isFollowing = !isFollowing;
                         });

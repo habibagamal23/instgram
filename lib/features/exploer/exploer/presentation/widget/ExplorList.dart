@@ -2,8 +2,8 @@
 import 'package:flutter/material.dart';
 import 'package:flutter_bloc/flutter_bloc.dart';
 import 'package:flutter_staggered_grid_view/flutter_staggered_grid_view.dart';
-import '../bloc/exploers_cubit.dart';
-import '../bloc/search_cubit.dart';
+import '../bloc/explorescubit/exploers_cubit.dart';
+import '../bloc/explorescubit/search_cubit.dart';
 class  Explorlist extends StatelessWidget {
   const Explorlist({super.key});
 

@@ -3,8 +3,8 @@ import 'dart:async';
 import 'package:flutter_bloc/flutter_bloc.dart';
 import 'package:meta/meta.dart';
 
-import '../../../../register/data/models/UserModel.dart';
-import '../../data/repository/searchrepo.dart';
+import '../../../../../register/data/models/UserModel.dart';
+import '../../../data/repository/searchrepo.dart';
 import 'package:rxdart/rxdart.dart';
 part 'search_state.dart';
 
@@ -32,7 +32,6 @@ class SearchCubit extends Cubit<SearchState> {
 
     emit(SearchLoading());
     try {
-      // Call the search function from your SearchRepo (Firebase)
       final users = await searchRepo.searchUsers(trimmedQuery);
       emit(SearchSuccess(users));
     } catch (e) {

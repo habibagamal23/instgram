@@ -6,7 +6,7 @@ import 'package:instaflutter/core/firebase/firebase_auth_service.dart';
 import 'package:instaflutter/features/profileUser/presentation/widgets/profilebasic.dart';
 import 'package:instaflutter/features/profileUser/presentation/widgets/tabs.dart';
 
-import '../../../exploer/exploer/presentation/bloc/ontherprofile_cubit.dart';
+import '../../../exploer/exploer/presentation/bloc/anothercubit/ontherprofile_cubit.dart';
 import '../../../post/data/models/postmodel.dart';
 import '../../../post/presentation/manager/post_cubit.dart';
 import '../../../register/data/models/UserModel.dart';

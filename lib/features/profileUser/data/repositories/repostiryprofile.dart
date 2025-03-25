@@ -22,6 +22,16 @@ class ProfileRepository {
     }
   }
 
+  Stream<UserModel> getUserProfileStream(String uid) {
+    return firestore.collection("users").doc(uid).snapshots().map((snapshot) {
+      if (snapshot.exists && snapshot.data() != null) {
+        return UserModel.fromFirestore(snapshot.data() as Map<String, dynamic>);
+      } else {
+        throw Exception("User not found");
+      }
+    });
+  }
+
   Future<void> updateUserProfile(UserModel user) async {
     try {
       await firestore

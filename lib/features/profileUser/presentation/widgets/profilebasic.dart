@@ -1,8 +1,11 @@
 import 'package:flutter/material.dart';
 import 'package:flutter_bloc/flutter_bloc.dart';
+import 'package:go_router/go_router.dart';
 import 'package:instaflutter/core/di/di.dart';
 import 'package:instaflutter/core/firebase/firebase_auth_service.dart';
+import 'package:instaflutter/core/routes/constants_routes.dart';
 
+import '../../../chat/presentation/bloc/rooms_cubit.dart';
 import '../../../exploer/exploer/presentation/bloc/anothercubit/ontherprofile_cubit.dart';
 import '../../../post/data/models/postmodel.dart';
 import '../../../post/presentation/manager/post_cubit.dart';
@@ -159,7 +162,11 @@ class _ProfileviewbasicsState extends State<Profileviewbasics> {
                     SizedBox(width: 10),
                     ElevatedButton(
                       onPressed: () {
-                        // Implement message functionality here
+                        context.read<RoomsCubit>().createRoom(
+                            user.uid, user.username, user.profileUrl);
+
+                        /// will chabge to chat screen
+                        context.push(ConstantsRoutes.homeScreen);
                       },
                       child: Text("Message"),
                     ),

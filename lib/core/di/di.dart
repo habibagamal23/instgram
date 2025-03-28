@@ -2,6 +2,7 @@ import 'package:cloud_firestore/cloud_firestore.dart';
 import 'package:firebase_storage/firebase_storage.dart';
 import 'package:get_it/get_it.dart';
 import 'package:firebase_auth/firebase_auth.dart';
+import 'package:instaflutter/features/chat/data/repository/chatRepo.dart';
 import 'package:instaflutter/features/exploer/exploer/data/repository/searchrepo.dart';
 import 'package:instaflutter/features/exploer/exploer/presentation/bloc/explorescubit/exploers_cubit.dart';
 import 'package:instaflutter/features/exploer/exploer/presentation/bloc/explorescubit/search_cubit.dart';
@@ -9,6 +10,7 @@ import 'package:instaflutter/features/home/presentation/manager/home_post_cubit.
 import 'package:instaflutter/features/post/presentation/manager/comments_cubit.dart';
 import 'package:instaflutter/features/register/presentation/manager/login_cubit.dart';
 
+import '../../features/chat/presentation/bloc/rooms_cubit.dart';
 import '../../features/exploer/exploer/presentation/bloc/anothercubit/ontherprofile_cubit.dart';
 import '../../features/post/data/repositories/postrepo.dart';
 import '../../features/post/presentation/manager/post_cubit.dart';
@@ -82,4 +84,9 @@ Future<void> setupGetIt() async {
 
   getIt.registerLazySingleton<FollowCubit>(
       () => FollowCubit(getIt<ProfileRepository>()));
+
+  getIt.registerLazySingleton<ChatRep>(
+      () => ChatRep(firestore: getIt<FirebaseFirestore>()));
+
+  getIt.registerLazySingleton<RoomsCubit>(() => RoomsCubit(getIt<ChatRep>()));
 }

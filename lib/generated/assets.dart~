@@ -48,7 +48,6 @@ class Assets {
   static const String pagesMainScreen = 'lib/features/home/presentation/pages/mainScreen.dart';
   static const String pagesProfileScreeen = 'lib/features/profileUser/presentation/pages/profileScreeen.dart';
   static const String pagesRegisterScreen = 'lib/features/register/presentation/pages/register_screen.dart';
-  static const String pagesRoomscreen = 'lib/features/chat/presentation/pages/roomscreen.dart';
   static const String presentationManagerCommentsCubit = 'lib/features/post/presentation/manager/comments_cubit.dart~';
   static const String presentationWidgetsChooseImage = 'lib/features/register/presentation/widgets/chooseImage.dart~';
   static const String presentationWidgetsCommentInput = 'lib/features/home/presentation/widgets/commentInput.dart~';

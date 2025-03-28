@@ -10,6 +10,7 @@ import 'package:instaflutter/features/register/presentation/manager/login_cubit.
 import 'core/di/di.dart';
 import 'core/firebase/firebase_storage.dart';
 import 'core/routes/app_router.dart';
+import 'features/chat/presentation/bloc/rooms_cubit.dart';
 import 'features/exploer/exploer/presentation/bloc/anothercubit/ontherprofile_cubit.dart';
 import 'features/exploer/exploer/presentation/bloc/explorescubit/search_cubit.dart';
 import 'features/post/data/repositories/postrepo.dart';
@@ -36,6 +37,7 @@ void main() async {
     BlocProvider(create: (context) => LoginCubit()),
     BlocProvider(create: (context) => getIt<OntherprofileCubit>()),
     BlocProvider(create: (context) => getIt<FollowCubit>()),
+    BlocProvider(create: (context) => getIt<RoomsCubit>()),
   ], child: MyApp()));
 }
 

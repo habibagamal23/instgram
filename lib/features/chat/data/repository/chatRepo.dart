@@ -40,12 +40,15 @@ class ChatRep {
   Stream<List<ChatRoomModel>> getAllChatRooms(String currentUid) {
     final chatRoomCollection = firestore
         .collection("rooms")
-        .where("members", arrayContains: currentUid)
         .orderBy("createdAt", descending: true);
 
-    return chatRoomCollection.snapshots().map((snapshot) => snapshot.docs
-        .map((doc) =>
-            ChatRoomModel.fromFirestore(doc.data() as Map<String, dynamic>))
-        .toList());
+    return chatRoomCollection.snapshots().map((snapshot) {
+      final allRooms = snapshot.docs.map((doc) =>
+          ChatRoomModel.fromFirestore(doc.data() as Map<String, dynamic>))
+          .toList();
+
+      return allRooms.where((room) => room.members!.contains(currentUid))
+          .toList();
+    });
   }
 }

@@ -88,5 +88,5 @@ Future<void> setupGetIt() async {
   getIt.registerLazySingleton<ChatRep>(
       () => ChatRep(firestore: getIt<FirebaseFirestore>()));
 
-  getIt.registerLazySingleton<RoomsCubit>(() => RoomsCubit(getIt<ChatRep>()));
+  getIt.registerFactory<RoomsCubit>(() => RoomsCubit(getIt<ChatRep>()));
 }

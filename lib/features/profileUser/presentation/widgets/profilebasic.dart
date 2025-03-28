@@ -162,11 +162,15 @@ class _ProfileviewbasicsState extends State<Profileviewbasics> {
                     SizedBox(width: 10),
                     ElevatedButton(
                       onPressed: () {
-                        context.read<RoomsCubit>().createRoom(
-                            user.uid, user.username, user.profileUrl);
-
-                        /// will chabge to chat screen
-                        context.push(ConstantsRoutes.homeScreen);
+                        final currentprofile =
+                            context.read<ProfileCubit>().currentUser;
+                        if (currentprofile != null) {
+                          context
+                              .read<RoomsCubit>()
+                              .createRoom(currentprofile, user);
+                          /// will change to chat screen
+                          context.push(ConstantsRoutes.homeScreen);
+                        }
                       },
                       child: Text("Message"),
                     ),

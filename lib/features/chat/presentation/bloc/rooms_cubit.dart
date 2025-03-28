@@ -2,6 +2,7 @@ import 'dart:async';
 
 import 'package:bloc/bloc.dart';
 import 'package:cloud_firestore/cloud_firestore.dart';
+import 'package:instaflutter/features/register/data/models/UserModel.dart';
 import 'package:meta/meta.dart';
 import 'package:uuid/uuid.dart';
 
@@ -19,18 +20,18 @@ class RoomsCubit extends Cubit<RoomsState> {
 
   StreamSubscription<List<ChatRoomModel>>? streamSubscription;
 
-  final crunnetid = getIt<FirebaseAuthService>().currentUser!.uid;
-  Future<void> createRoom(
-      anotherUserId, username, imageProfileAnotherUser) async {
+  Future<void> createRoom(UserModel currentuser, UserModel antheruser) async {
     emit(CreateRoomLoading());
     try {
       ChatRoomModel chatRoom = ChatRoomModel(
         messageId: Uuid().v1(),
+        username: currentuser.username,
         lastMessage: "",
-        members: [crunnetid, anotherUserId],
-        useramanotherUser: username,
+        members: [currentuser.uid!, antheruser.uid!],
+        useramanotherUser: antheruser.username,
         createdAt: Timestamp.now(),
-        imageProfileAnotherUser: imageProfileAnotherUser,
+        imageProfileAnotherUser: antheruser.profileUrl,
+        imageProfileUser: currentuser.profileUrl,
         totalUnReadMessages: 0,
       );
       await chatRepo.createChatRoomIfNotExists(chatRoomModel: chatRoom);
@@ -40,6 +41,8 @@ class RoomsCubit extends Cubit<RoomsState> {
       emit(CreateRoomFailure(e.toString()));
     }
   }
+
+  final crunnetid = getIt<FirebaseAuthService>().currentUser!.uid;
 
   getAllChatRooms() {
     emit(ChatRoomLoading());

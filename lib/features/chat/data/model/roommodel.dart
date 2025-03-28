@@ -3,7 +3,9 @@ import 'package:cloud_firestore/cloud_firestore.dart';
 class ChatRoomModel {
   final String? messageId;
   final String? lastMessage;
-  List<String>? members;
+  final List<String>? members;
+  final String? username;
+  final String? imageProfileUser;
   final String? useramanotherUser;
   final Timestamp? createdAt;
   final String? imageProfileAnotherUser;
@@ -13,35 +15,41 @@ class ChatRoomModel {
     this.messageId,
     this.lastMessage,
     this.members,
+    this.username,
+    this.imageProfileUser,
     this.useramanotherUser,
     this.createdAt,
     this.imageProfileAnotherUser,
     this.totalUnReadMessages,
   });
 
-  /// Convert from Firestore Map to ChatRoomModel
-  factory ChatRoomModel.fromFirestore(Map<String, dynamic> json) {
-    return ChatRoomModel(
-      messageId: json['messageId'] as String?,
-      lastMessage: json['lastMessage'] as String?,
-      members: List<String>.from(json['members'] ?? []),
-      useramanotherUser: json['useramanotherUser'] as String?,
-      createdAt: json['createdAt'] as Timestamp?,
-      imageProfileAnotherUser: json['imageProfileAnotherUser'] as String?,
-      totalUnReadMessages: json['totalUnReadMessages'] ?? 0,
-    );
-  }
-
-  /// Convert ChatRoomModel to Firestore Map
+  /// Convert to Firestore Map
   Map<String, dynamic> toFirestore() {
     return {
       'messageId': messageId,
-      'lastMessage': lastMessage,
+      'lastMessage': lastMessage ?? '',
       'members': members ?? [],
-      'useramanotherUser': useramanotherUser,
-      'createdAt': createdAt ?? Timestamp.now(),
-      'imageProfileAnotherUser': imageProfileAnotherUser,
+      'username': username ?? '',
+      'imageProfileUser': imageProfileUser ?? '',
+      'useramanotherUser': useramanotherUser ?? '',
+      'createdAt': createdAt ?? FieldValue.serverTimestamp(),
+      'imageProfileAnotherUser': imageProfileAnotherUser ?? '',
       'totalUnReadMessages': totalUnReadMessages ?? 0,
     };
+  }
+
+  /// Create from Firestore Map
+  factory ChatRoomModel.fromFirestore(Map<String, dynamic> data) {
+    return ChatRoomModel(
+      messageId: data['messageId'],
+      lastMessage: data['lastMessage'],
+      members: List<String>.from(data['members'] ?? []),
+      username: data['username'],
+      imageProfileUser: data['imageProfileUser'],
+      useramanotherUser: data['useramanotherUser'],
+      createdAt: data['createdAt'],
+      imageProfileAnotherUser: data['imageProfileAnotherUser'],
+      totalUnReadMessages: data['totalUnReadMessages'] ?? 0,
+    );
   }
 }

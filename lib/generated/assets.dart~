@@ -5,6 +5,8 @@ class Assets {
   static const String anothercubitOntherprofileCubit = 'lib/features/exploer/exploer/presentation/bloc/anothercubit/ontherprofile_cubit.dart';
   static const String anothercubitOntherprofileState = 'lib/features/exploer/exploer/presentation/bloc/anothercubit/ontherprofile_state.dart';
   static const String blocExploersCubit = 'lib/features/exploer/exploer/presentation/bloc/exploers_cubit.dart~';
+  static const String blocMessagesCubit = 'lib/features/chat/presentation/bloc/messages_cubit.dart';
+  static const String blocMessagesState = 'lib/features/chat/presentation/bloc/messages_state.dart';
   static const String blocOntherprofileCubit = 'lib/features/exploer/exploer/presentation/bloc/ontherprofile_cubit.dart~';
   static const String blocRoomsCubit = 'lib/features/chat/presentation/bloc/rooms_cubit.dart';
   static const String blocRoomsState = 'lib/features/chat/presentation/bloc/rooms_state.dart';
@@ -20,6 +22,7 @@ class Assets {
   static const String firebaseFirebaseStorage = 'lib/core/firebase/firebase_storage.dart';
   static const String generatedAssets = 'lib/generated/assets.dart';
   static const String libFirebaseOptions = 'lib/firebase_options.dart';
+  static const String libGeneratedAssets = 'lib/generated/assets.dart~';
   static const String libMain = 'lib/main.dart';
   static const String managerCommentsCubit = 'lib/features/post/presentation/manager/comments_cubit.dart';
   static const String managerCommentsState = 'lib/features/post/presentation/manager/comments_state.dart';
@@ -33,6 +36,7 @@ class Assets {
   static const String managerPostState = 'lib/features/post/presentation/manager/post_state.dart';
   static const String managerProfileCubit = 'lib/features/profileUser/presentation/manager/profile_cubit.dart';
   static const String managerProfileState = 'lib/features/profileUser/presentation/manager/profile_state.dart';
+  static const String modelMessage = 'lib/features/chat/data/model/message.dart';
   static const String modelRoommodel = 'lib/features/chat/data/model/roommodel.dart';
   static const String modelsCommetmodel = 'lib/features/post/data/models/commetmodel.dart';
   static const String modelsPostmodel = 'lib/features/post/data/models/postmodel.dart';
@@ -48,7 +52,9 @@ class Assets {
   static const String pagesMainScreen = 'lib/features/home/presentation/pages/mainScreen.dart';
   static const String pagesProfileScreeen = 'lib/features/profileUser/presentation/pages/profileScreeen.dart';
   static const String pagesRegisterScreen = 'lib/features/register/presentation/pages/register_screen.dart';
+  static const String pagesRoomscreen = 'lib/features/chat/presentation/pages/roomscreen.dart';
   static const String presentationManagerCommentsCubit = 'lib/features/post/presentation/manager/comments_cubit.dart~';
+  static const String presentationPagesHomepage = 'lib/features/home/presentation/pages/homepage.dart~';
   static const String presentationWidgetsChooseImage = 'lib/features/register/presentation/widgets/chooseImage.dart~';
   static const String presentationWidgetsCommentInput = 'lib/features/home/presentation/widgets/commentInput.dart~';
   static const String presentationWidgetsProfileview = 'lib/features/profileUser/presentation/widgets/profileview.dart~';

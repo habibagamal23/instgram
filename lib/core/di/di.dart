@@ -3,6 +3,7 @@ import 'package:firebase_storage/firebase_storage.dart';
 import 'package:get_it/get_it.dart';
 import 'package:firebase_auth/firebase_auth.dart';
 import 'package:instaflutter/features/chat/data/repository/chatRepo.dart';
+import 'package:instaflutter/features/chat/presentation/bloc/messages_cubit.dart';
 import 'package:instaflutter/features/exploer/exploer/data/repository/searchrepo.dart';
 import 'package:instaflutter/features/exploer/exploer/presentation/bloc/explorescubit/exploers_cubit.dart';
 import 'package:instaflutter/features/exploer/exploer/presentation/bloc/explorescubit/search_cubit.dart';
@@ -89,4 +90,7 @@ Future<void> setupGetIt() async {
       () => ChatRep(firestore: getIt<FirebaseFirestore>()));
 
   getIt.registerFactory<RoomsCubit>(() => RoomsCubit(getIt<ChatRep>()));
+  getIt.registerFactory<MessagesCubit>(() => MessagesCubit(getIt<ChatRep>()));
+
+
 }

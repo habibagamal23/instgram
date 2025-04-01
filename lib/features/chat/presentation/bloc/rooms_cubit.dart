@@ -20,34 +20,33 @@ class RoomsCubit extends Cubit<RoomsState> {
 
   StreamSubscription<List<ChatRoomModel>>? streamSubscription;
 
-  Future<void> createRoom(UserModel currentuser, UserModel antheruser) async {
+  Future<String?> createRoom(String anotherUserUid) async {
     emit(CreateRoomLoading());
     try {
-      ChatRoomModel chatRoom = ChatRoomModel(
-        messageId: Uuid().v1(),
-        username: currentuser.username,
-        lastMessage: "",
-        members: [currentuser.uid!, antheruser.uid!],
-        useramanotherUser: antheruser.username,
-        createdAt: Timestamp.now(),
-        imageProfileAnotherUser: antheruser.profileUrl,
-        imageProfileUser: currentuser.profileUrl,
-        totalUnReadMessages: 0,
-      );
-      await chatRepo.createChatRoomIfNotExists(chatRoomModel: chatRoom);
-
+      final roomId = await chatRepo.createChatRoomIfNotExists(anotherUserUid);
       emit(CreateRoomSuccess());
+      return roomId;
     } catch (e) {
       emit(CreateRoomFailure(e.toString()));
+      return null;
     }
   }
 
-  final crunnetid = getIt<FirebaseAuthService>().currentUser!.uid;
+  final currentUid = getIt<FirebaseAuthService>().currentUser!.uid;
 
   getAllChatRooms() {
     emit(ChatRoomLoading());
-    streamSubscription = chatRepo.getAllChatRooms(crunnetid).listen((rooms) {
-      emit(ChatRoomLoaded(rooms));
+    streamSubscription =
+        chatRepo.getAllChatRooms(currentUid).listen((rooms) async {
+      List<ChatRoomModel> updatedRooms = [];
+
+      for (var room in rooms) {
+        final otherUserId = room.members!.firstWhere((id) => id != currentUid);
+        final otherUserData = await chatRepo.getUserProfile(otherUserId);
+        room.otherUserData = otherUserData;
+        updatedRooms.add(room);
+      }
+      emit(ChatRoomLoaded(updatedRooms));
     }, onError: (error) {
       emit(ChatRoomError(error.toString()));
     });

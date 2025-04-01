@@ -3,6 +3,7 @@ import 'package:firebase_core/firebase_core.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_bloc/flutter_bloc.dart';
 import 'package:flutter_screenutil/flutter_screenutil.dart';
+import 'package:instaflutter/features/chat/presentation/bloc/messages_cubit.dart';
 import 'package:instaflutter/features/home/presentation/manager/home_post_cubit.dart';
 import 'package:instaflutter/features/post/presentation/manager/comments_cubit.dart';
 import 'package:instaflutter/features/profileUser/presentation/manager/follow_cubit.dart';
@@ -38,6 +39,7 @@ void main() async {
     BlocProvider(create: (context) => getIt<OntherprofileCubit>()),
     BlocProvider(create: (context) => getIt<FollowCubit>()),
     BlocProvider(create: (context) => getIt<RoomsCubit>()),
+    BlocProvider(create: (context) => getIt<MessagesCubit>()),
   ], child: MyApp()));
 }
 

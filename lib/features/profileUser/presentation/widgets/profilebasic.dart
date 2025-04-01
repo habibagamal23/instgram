@@ -6,6 +6,7 @@ import 'package:instaflutter/core/firebase/firebase_auth_service.dart';
 import 'package:instaflutter/core/routes/constants_routes.dart';
 
 import '../../../chat/presentation/bloc/rooms_cubit.dart';
+import '../../../chat/presentation/pages/messagesscreen.dart';
 import '../../../exploer/exploer/presentation/bloc/anothercubit/ontherprofile_cubit.dart';
 import '../../../post/data/models/postmodel.dart';
 import '../../../post/presentation/manager/post_cubit.dart';
@@ -161,19 +162,31 @@ class _ProfileviewbasicsState extends State<Profileviewbasics> {
                     ),
                     SizedBox(width: 10),
                     ElevatedButton(
-                      onPressed: () {
-                        final currentprofile =
-                            context.read<ProfileCubit>().currentUser;
-                        if (currentprofile != null) {
-                          context
-                              .read<RoomsCubit>()
-                              .createRoom(currentprofile, user);
-                          /// will change to chat screen
-                          context.push(ConstantsRoutes.homeScreen);
+                      onPressed: () async {
+                        final cubit = context.read<RoomsCubit>();
+                        final roomId = await cubit.createRoom(user.uid!);
+
+                        if (roomId != null) {
+                          Navigator.push(
+                            context,
+                            MaterialPageRoute(
+                              builder: (context) => MessagesScreen(
+                                roomId: roomId,
+                                anotherUserId: user.uid!,
+                                Username: user.username!,
+                              ),
+                            ),
+                          );
+                        } else {
+                          ScaffoldMessenger.of(context).showSnackBar(
+                            SnackBar(
+                                content:
+                                    Text("Failed to create or load chat room")),
+                          );
                         }
                       },
                       child: Text("Message"),
-                    ),
+                    )
                   ],
                 ),
         ],

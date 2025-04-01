@@ -2,6 +2,7 @@ import 'package:flutter/material.dart';
 import 'package:flutter_bloc/flutter_bloc.dart';
 import 'package:instaflutter/core/di/di.dart';
 import 'package:instaflutter/features/chat/presentation/bloc/rooms_cubit.dart';
+import 'package:instaflutter/features/chat/presentation/pages/messagesscreen.dart';
 
 import '../../../../core/firebase/firebase_auth_service.dart';
 
@@ -41,13 +42,19 @@ class _RoomscreenState extends State<Roomscreen> {
             itemBuilder: (context, index) {
               final room = rooms[index];
               return ListTile(
-                title: Text(room.useramanotherUser??''),
+                title: Text(room.otherUserData!.username!),
                 subtitle: Text(room.lastMessage ?? ''),
                 leading: CircleAvatar(
                   radius: 30,
                 ),
                 onTap: () {
-                  // Navigate to chat detail screen
+                  Navigator.push(
+                      context,
+                      MaterialPageRoute(
+                          builder: (context) => MessagesScreen(
+                              roomId: room.roomid!,
+                              anotherUserId: room.otherUserData!.uid!,
+                              Username: room.otherUserData!.username!)));
                 },
               );
             },

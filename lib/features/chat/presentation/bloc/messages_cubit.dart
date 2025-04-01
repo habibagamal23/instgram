@@ -1,0 +1,59 @@
+import 'dart:async';
+
+import 'package:bloc/bloc.dart';
+import 'package:cloud_firestore/cloud_firestore.dart';
+import 'package:flutter/cupertino.dart';
+import 'package:instaflutter/features/chat/data/repository/chatRepo.dart';
+import 'package:meta/meta.dart';
+import 'package:uuid/uuid.dart';
+
+import '../../../../core/di/di.dart';
+import '../../../../core/firebase/firebase_auth_service.dart';
+import '../../data/model/message.dart';
+
+part 'messages_state.dart';
+
+class MessagesCubit extends Cubit<MessagesState> {
+  final ChatRep chatRepo;
+
+  MessagesCubit(this.chatRepo) : super(MessagesInitial());
+
+  StreamSubscription<List<MessageModel>>? _messagesSub;
+  TextEditingController textEditingController = TextEditingController();
+  final currentUser = getIt<FirebaseAuthService>().currentUser!.uid;
+
+  Future<void> sendMessage(
+      {required String roomId, required String anotherUserId}) async {
+    emit(SendMessageLoading());
+
+    try {
+      final message = MessageModel(
+        messageId: const Uuid().v1(),
+        userId: currentUser,
+        anotherUserId: anotherUserId,
+        text: textEditingController.text,
+        createdAt: Timestamp.now(),
+        isSeen: false,
+      );
+
+      await chatRepo.sendMessage(
+        roomId: roomId,
+        message: message,
+      );
+
+      emit(SendMessageSuccess());
+      listenToMessages(roomId);
+    } catch (e) {
+      emit(SendMessageFailure("Failed to send message: \$e"));
+    }
+  }
+
+  void listenToMessages(String roomId) {
+    emit(MessagesLoading());
+    _messagesSub = chatRepo.getMessagesForRoom(roomId).listen((messages) {
+      emit(MessagesLoaded(messages));
+    }, onError: (error) {
+      emit(MessagesError(error.toString()));
+    });
+  }
+}

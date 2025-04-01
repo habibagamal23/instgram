@@ -1,39 +1,30 @@
 import 'package:cloud_firestore/cloud_firestore.dart';
 
+import '../../../register/data/models/UserModel.dart';
+
 class ChatRoomModel {
-  final String? messageId;
+  final String? roomid;
   final String? lastMessage;
   final List<String>? members;
-  final String? username;
-  final String? imageProfileUser;
-  final String? useramanotherUser;
-  final Timestamp? createdAt;
-  final String? imageProfileAnotherUser;
-  final num? totalUnReadMessages;
+  Timestamp? createdAt;
+  num? totalUnReadMessages;
 
   ChatRoomModel({
-    this.messageId,
+    this.roomid,
     this.lastMessage,
     this.members,
-    this.username,
-    this.imageProfileUser,
-    this.useramanotherUser,
     this.createdAt,
-    this.imageProfileAnotherUser,
     this.totalUnReadMessages,
   });
+  UserModel? otherUserData;
 
   /// Convert to Firestore Map
   Map<String, dynamic> toFirestore() {
     return {
-      'messageId': messageId,
+      'roomId': roomid,
       'lastMessage': lastMessage ?? '',
       'members': members ?? [],
-      'username': username ?? '',
-      'imageProfileUser': imageProfileUser ?? '',
-      'useramanotherUser': useramanotherUser ?? '',
       'createdAt': createdAt ?? FieldValue.serverTimestamp(),
-      'imageProfileAnotherUser': imageProfileAnotherUser ?? '',
       'totalUnReadMessages': totalUnReadMessages ?? 0,
     };
   }
@@ -41,14 +32,10 @@ class ChatRoomModel {
   /// Create from Firestore Map
   factory ChatRoomModel.fromFirestore(Map<String, dynamic> data) {
     return ChatRoomModel(
-      messageId: data['messageId'],
+      roomid: data['roomId'],
       lastMessage: data['lastMessage'],
       members: List<String>.from(data['members'] ?? []),
-      username: data['username'],
-      imageProfileUser: data['imageProfileUser'],
-      useramanotherUser: data['useramanotherUser'],
       createdAt: data['createdAt'],
-      imageProfileAnotherUser: data['imageProfileAnotherUser'],
       totalUnReadMessages: data['totalUnReadMessages'] ?? 0,
     );
   }

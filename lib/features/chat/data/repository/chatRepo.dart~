@@ -60,7 +60,6 @@ class ChatRep {
               ChatRoomModel.fromFirestore(doc.data() as Map<String, dynamic>))
           .toList();
 
-      ///  Filter rooms where current user is a member
       return allRooms
           .where((room) => room.members!.contains(currentUid))
           .toList();

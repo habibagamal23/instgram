@@ -167,16 +167,19 @@ class _ProfileviewbasicsState extends State<Profileviewbasics> {
                         final roomId = await cubit.createRoom(user.uid!);
 
                         if (roomId != null) {
-                          Navigator.push(
-                            context,
-                            MaterialPageRoute(
-                              builder: (context) => MessagesScreen(
-                                roomId: roomId,
-                                anotherUserId: user.uid!,
-                                Username: user.username!,
-                              ),
-                            ),
-                          );
+                          // change to chat screen now for test
+                          context.push(ConstantsRoutes.homeScreen);
+                          //
+                          // Navigator.push(
+                          //   context,
+                          //   MaterialPageRoute(
+                          //     builder: (context) => MessagesScreen(
+                          //       roomId: roomId,
+                          //       anotherUserId: user.uid!,
+                          //       Username: user.username!,
+                          //     ),
+                          //   ),
+                          // );
                         } else {
                           ScaffoldMessenger.of(context).showSnackBar(
                             SnackBar(

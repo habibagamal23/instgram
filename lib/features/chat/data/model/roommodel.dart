@@ -16,6 +16,7 @@ class ChatRoomModel {
     this.createdAt,
     this.totalUnReadMessages,
   });
+
   UserModel? otherUserData;
 
   /// Convert to Firestore Map

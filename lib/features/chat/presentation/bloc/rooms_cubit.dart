@@ -18,7 +18,6 @@ class RoomsCubit extends Cubit<RoomsState> {
 
   RoomsCubit(this.chatRepo) : super(RoomsInitial());
 
-  StreamSubscription<List<ChatRoomModel>>? streamSubscription;
 
   Future<String?> createRoom(String anotherUserUid) async {
     emit(CreateRoomLoading());
@@ -33,9 +32,10 @@ class RoomsCubit extends Cubit<RoomsState> {
   }
 
   final currentUid = getIt<FirebaseAuthService>().currentUser!.uid;
+  StreamSubscription<List<ChatRoomModel>>? streamSubscription;
 
   getAllChatRooms() {
-    emit(ChatRoomLoading());
+    emit(getRoomLoading());
     streamSubscription =
         chatRepo.getAllChatRooms(currentUid).listen((rooms) async {
       List<ChatRoomModel> updatedRooms = [];
@@ -46,9 +46,10 @@ class RoomsCubit extends Cubit<RoomsState> {
         room.otherUserData = otherUserData;
         updatedRooms.add(room);
       }
-      emit(ChatRoomLoaded(updatedRooms));
+
+      emit(getRoomLoded(updatedRooms));
     }, onError: (error) {
-      emit(ChatRoomError(error.toString()));
+      emit(getRoomError(error.toString()));
     });
   }
 }

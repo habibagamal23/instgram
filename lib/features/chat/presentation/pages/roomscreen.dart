@@ -26,13 +26,13 @@ class _RoomscreenState extends State<Roomscreen> {
     return Scaffold(
       appBar: AppBar(title: Text("Chats")),
       body: BlocBuilder<RoomsCubit, RoomsState>(builder: (context, state) {
-        if (state is ChatRoomError) {
+        if (state is getRoomError) {
           return Center(child: Text(state.message));
         }
-        if (state is ChatRoomLoading) {
+        if (state is getRoomLoading) {
           return Center(child: CircularProgressIndicator());
         }
-        if (state is ChatRoomLoaded) {
+        if (state is getRoomLoded) {
           final rooms = state.chatRooms;
           if (rooms.isEmpty) {
             return Center(child: Text("No chats yet."));
@@ -46,15 +46,16 @@ class _RoomscreenState extends State<Roomscreen> {
                 subtitle: Text(room.lastMessage ?? ''),
                 leading: CircleAvatar(
                   radius: 30,
+                  backgroundImage: NetworkImage(room.otherUserData!.profileUrl!),
                 ),
                 onTap: () {
-                  Navigator.push(
-                      context,
-                      MaterialPageRoute(
-                          builder: (context) => MessagesScreen(
-                              roomId: room.roomid!,
-                              anotherUserId: room.otherUserData!.uid!,
-                              Username: room.otherUserData!.username!)));
+                  // Navigator.push(
+                  //     context,
+                  //     MaterialPageRoute(
+                  //         builder: (context) => MessagesScreen(
+                  //             roomId: room.roomid!,
+                  //             anotherUserId: room.otherUserData!.uid!,
+                  //             Username: room.otherUserData!.username!)));
                 },
               );
             },

@@ -8,20 +8,18 @@ final class RoomsInitial extends RoomsState {}
 
 
 class CreateRoomLoading extends RoomsState {}
-class CreateRoomSuccess extends RoomsState {
-  CreateRoomSuccess();
-}
+class CreateRoomSuccess extends RoomsState {}
 class CreateRoomFailure extends RoomsState {
   final String error;
   CreateRoomFailure(this.error);
 }
 
-class ChatRoomLoading extends RoomsState {}
-class ChatRoomLoaded extends RoomsState {
+class getRoomLoading extends RoomsState {}
+class getRoomLoded extends RoomsState {
   final List<ChatRoomModel> chatRooms;
-  ChatRoomLoaded(this.chatRooms);
+  getRoomLoded(this.chatRooms);
 }
-class ChatRoomError extends RoomsState {
+class getRoomError extends RoomsState {
   final String message;
-  ChatRoomError(this.message);
+  getRoomError(this.message);
 }
